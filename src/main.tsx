@@ -71,13 +71,16 @@ Devvit.addCustomPostType({
       onMessage(message, _webView){
         console.log("recieved from webview", message);
         if (message.type === 'webViewReady') {
-          _webView.postMessage({type: "initialData",
-            data: {sentence: "this is sentece from devvit"}});
-        }
+          //  send question to webview
+
+          _webView.postMessage({type: "newQuestion",
+            incompleteSentence: "this is sentece to display from devvit"});
+          }
+
         if(message.type == "submit"){
-            // do the redis and create a comment
-            // _webView.unmount();
-            // changeview to check comments
+            // do the redis? and create a comment
+            // changeview to check submitted page
+            console.log("user completed sentence",message.userSentence);
         }
 
       },

@@ -8,7 +8,7 @@ export const auto_post_turn_on_menuItem: MenuItem = {
 
     const jobId = await context.scheduler.runJob({
         name: AUTO_SENTENCE_POST_JOB,
-        cron: "0-59 * * * *"
+        cron: "0-59 * * * *" //every minute
     });
 
     // save job id for cancelling
@@ -29,7 +29,7 @@ export const auto_post_turn_off_menuItem: MenuItem = {
 
     const jobId = (await context.redis.get(AUTO_SENTENCE_POST_JOB+':jobId')) || '0';
     await context.scheduler.cancelJob(jobId);
-    // save job id for cancelling
+   
     context.ui.showToast("job cancelled! - " + jobId)
   },
 };

@@ -3,11 +3,10 @@
 
 class App {
   constructor() {
-    // Get references to the HTML elements
 
-    // When the Devvit app sends a message with `postMessage()`, this will be triggered
-    // This event gets called when the web view is loaded
     addEventListener('load', () => {
+
+      //page loaded. send message to devvit. devvit will send the question.
       postWebViewMessage({ type: 'webViewReady' });
     });
 
@@ -15,6 +14,11 @@ class App {
       if (event.data.type === 'devvit-message') {
         const { data } = event.data;
         console.log('Received from Devvit:', data);
+
+
+        // if type == newQuestion ; display new question
+
+        
       }
     });
 
@@ -22,7 +26,9 @@ class App {
     this.submitBtn = /** @type {HTMLSpanElement} */ (document.querySelector('#submitBtn'));
 
     this.submitBtn.addEventListener('click',(e)=>{
-      postWebViewMessage({type:'submit'})
+      postWebViewMessage({type:'submit' , userSentence : "this is user sentece sent from webview"});
+
+      //change html view to submitted page
     })
     
   

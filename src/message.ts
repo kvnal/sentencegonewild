@@ -1,13 +1,13 @@
 /** Message from Devvit to the web view. */
 export type DevvitMessage =
-  | { type: 'initialData'; data: { sentence: string} }
-  | { type: 'submit'}
-  | { type: 'updateCounter'; data: { currentCounter: number } };
+  { type: 'webViewReady' }
+  | { type: 'newQuestion' , incompleteSentence : string}
+  | { type: 'submit' , userSentence : string}
 
 /** Message from the web view to Devvit. */
 export type WebViewMessage =
-  | { type: 'webViewReady' } | { type: 'submit' } 
-  | { type: 'setCounter'; data: { newCounter: number } };
+  | { type: 'webViewReady' }
+  | { type: 'submit' , userSentence : string} 
 
 /**
  * Web view MessageEvent listener data type. The Devvit API wraps all messages
