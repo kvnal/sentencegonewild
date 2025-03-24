@@ -4,6 +4,9 @@
   "version": "0.0.0",
   "license": "BSD-3-Clause",
   "type": "module",
+  "scripts": {
+    "start": "devvit playtest devvit_test_app"
+  },
   "dependencies": {
     "@devvit/public-api": "0.11.10"
   },
