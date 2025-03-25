@@ -1,10 +1,17 @@
-import { MenuItem } from "@devvit/public-api";
+import { Devvit, MenuItem, RedditAPIClient } from "@devvit/public-api";
 import { AUTO_SENTENCE_POST_JOB } from "../scheduler/autoPost.js";
 
 export const auto_post_turn_on_menuItem: MenuItem = {
-  label: "ON - auto post",
+  label: "ON - auto post (kunal)",
   location: "subreddit",
   onPress: async (event, context) => {
+
+    const isJobExists = await context.redis.exists(AUTO_SENTENCE_POST_JOB+':jobId');
+
+    if(isJobExists){
+      context.ui.showToast("job already exists!");
+      return;
+    }
 
     const jobId = await context.scheduler.runJob({
         name: AUTO_SENTENCE_POST_JOB,
@@ -23,13 +30,14 @@ export const auto_post_turn_on_menuItem: MenuItem = {
 
 
 export const auto_post_turn_off_menuItem: MenuItem = {
-  label: "OFF - auto post",
+  label: "OFF - auto post (kunal)",
   location: "subreddit",
   onPress: async (event, context) => {
 
     const jobId = (await context.redis.get(AUTO_SENTENCE_POST_JOB+':jobId')) || '0';
     await context.scheduler.cancelJob(jobId);
    
+    await context.redis.del(AUTO_SENTENCE_POST_JOB+':jobId');
     context.ui.showToast("job cancelled! - " + jobId)
   },
 };

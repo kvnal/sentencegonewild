@@ -88,7 +88,10 @@ Devvit.addCustomPostType({
             console.log("postid",_context.postId)
 
             if(_context.postId){
-              _context.reddit.submitComment({text:"auto text", id: _context.postId})
+              let comment = await _context.reddit.submitComment({text: data.payload.completedSentence, id: _context.postId})
+
+              // submit page - check out some wild sentece button - on click - code  
+              _context.ui.navigateTo(comment);
             }
 
         }
