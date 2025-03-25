@@ -74,13 +74,20 @@ Devvit.addCustomPostType({
           //  send question to webview
 
           _webView.postMessage({type: "newQuestion",
-            incompleteSentence: "this is sentece to display from devvit"});
+            incompleteSentence: "this is sentece to display from devvit"}) ;
           }
 
+
+          // _context.redis.zScore()
         if(message.type == "submit"){
             // do the redis? and create a comment
             // changeview to check submitted page
             console.log("user completed sentence",message.userSentence);
+            console.log("postid",_context.postId)
+
+            if(_context.postId){
+              _context.reddit.submitComment({text:"auto text", id: _context.postId})
+            }
         }
 
       },
