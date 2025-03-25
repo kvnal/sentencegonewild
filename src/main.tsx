@@ -85,6 +85,12 @@ Devvit.addCustomPostType({
             // do the redis? and create a comment
             // changeview to check submitted page
             console.log("User completed sentence",data.payload.completedSentence);
+          console.log("user completed sentence",message.userSentence);
+            console.log("postid",_context.postId)
+
+            if(_context.postId){
+              _context.reddit.submitComment({text:"auto text", id: _context.postId})
+            }
 
         }
 
