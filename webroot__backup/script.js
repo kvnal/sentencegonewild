@@ -1,5 +1,5 @@
-/** @typedef {import('../src/message.ts').DevvitSystemMessage} DevvitSystemMessage */
-/** @typedef {import('../src/message.ts').WebViewMessage} WebViewMessage */
+/** @typedef {import('../src/message.js').DevvitSystemMessage} DevvitSystemMessage */
+/** @typedef {import('../src/message.js').WebViewMessage} WebViewMessage */
 
 class App {
   constructor() {

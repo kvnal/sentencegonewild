@@ -3,9 +3,14 @@ import { Devvit, useForm, useState, useWebView } from '@devvit/public-api';
 import './scheduler/autoPost.js'
 import { auto_post_turn_off_menuItem, auto_post_turn_on_menuItem } from './actions/menuItems.js';
 import { DevvitMessage, WebViewMessage } from './message.js';
+import { Preview } from './components/Preview.js';
+import { BlocksToWebviewMessage, WebviewToBlockMessage } from '../game/shared.js';
 
 Devvit.configure({
   redditAPI: true,
+  http: true,
+  redis: true,
+  realtime: true,
 });
 
 // Add a menu item to the subreddit menu for instantiating the new experience post
@@ -22,11 +27,7 @@ Devvit.addMenuItem({
       title: 'My devvit post',
       subredditName: subreddit.name,
       // The preview appears while the post loads
-      preview: (
-        <vstack height="100%" width="100%" alignment="middle center">
-          <text size="large">Loading ...</text>
-        </vstack>
-      ),
+      preview: <Preview />,
     });
     ui.navigateTo(post);
   },
@@ -65,54 +66,57 @@ Devvit.addCustomPostType({
     );
    
     
-    const webView = useWebView<WebViewMessage, DevvitMessage>({
+    const {mount} = useWebView<WebviewToBlockMessage, BlocksToWebviewMessage>({
       // URL of your web view content
-      url: 'page.html',
-      onMessage(message, _webView){
-        console.log("recieved from webview", message);
-        if (message.type === 'webViewReady') {
+      onMessage: async (event, {postMessage}) => {
+
+        console.log("Recieved message from webview", event);
+
+        const data = event as unknown as WebviewToBlockMessage;
+
+        if (data.type === 'INIT') {
           //  send question to webview
 
-          _webView.postMessage({type: "newQuestion",
-            incompleteSentence: "this is sentece to display from devvit"}) ;
+          postMessage({type: "INIT_RESPONSE",
+            payload: {postId: _context.postId!,  incompleteSentence: "This is an incomplete Sentence to display from Devvit backend"}}); // Random Sentece will be entered here
           }
 
-
-          // _context.redis.zScore()
-        if(message.type == "submit"){
+        if(data.type == "SUBMIT"){
             // do the redis? and create a comment
             // changeview to check submitted page
-            console.log("user completed sentence",message.userSentence);
+            console.log("User completed sentence",data.payload.completedSentence);
+          console.log("user completed sentence",message.userSentence);
             console.log("postid",_context.postId)
 
             if(_context.postId){
               _context.reddit.submitComment({text:"auto text", id: _context.postId})
             }
+
         }
 
       },
       onUnmount() {
         // _context.ui.showToast('Web view closed!');
-        console.log("webview closed!")
+        console.log("Webview closed!")
       },
     });
 
     
     return (
       <vstack height="100%" width="100%" gap="medium" alignment="center middle">
-        <text size="large">{`Click counter: ${counter}`}</text>
+        {/* <text size="large">{`Click counter: ${counter}`}</text>
         <text size="large">{`Click counter: ${counter}`}</text>
         <text size="large">{`Click counter: ${counter}`}</text>
         <text size="large">{`Click counter: ${counter}`}</text>
         <button appearance="primary" onPress={() => setCounter((counter) => counter + 1)}>
           Click me! ok
-        </button>
+        </button> */}
 
         <button appearance="primary" onPress={() => _context.ui.showForm(myForm)}>
-         form
+         Form
         </button>
-        <button appearance="primary" onPress={() =>webView.mount()}>
-         webview
+        <button appearance="primary" onPress={() =>mount()}>
+         Launch
         </button>
       </vstack>
     );

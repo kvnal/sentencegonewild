@@ -5,12 +5,34 @@
   "license": "BSD-3-Clause",
   "type": "module",
   "scripts": {
-    "start": "devvit playtest devvit_test_app"
+    "start": "devvit playtest devvit_test_app",
+    "dev:game": "vite build --watch",
+    "dev:devvit": "devvit playtest devvit_test_app",
+    "dev": "concurrently -p \"[{name}]\" -n \"DEVVIT,GAME\" -c \"bgBlue.bold,bgMagenta.bold,bgGreen.bold\" \"npm run dev:devvit\" \"npm run dev:game\" --restart-tries 30",
+    "vite": "vite",
+    "upload": "devvit upload",
+    "uninstall:sd": "devvit uninstall devvit_test_app sentencegonewi-2",
+    "install": "devvit install devvit_test_app"
   },
   "dependencies": {
-    "@devvit/public-api": "0.11.10"
+    "@devvit/public-api": "0.11.10",
+    "clsx": "^2.1.1",
+    "concurrently": "^9.1.2",
+    "motion": "^12.5.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^3.0.2",
+    "tsx": "^4.19.3",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
-    "typescript": "5.3.2"
+    "@tailwindcss/vite": "^4.0.15",
+    "@types/react": "^19.0.12",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "tailwindcss": "^4.0.15",
+    "typescript": "5.3.2",
+    "vite": "^6.2.3",
+    "vitest": "^3.0.9"
   }
 }
