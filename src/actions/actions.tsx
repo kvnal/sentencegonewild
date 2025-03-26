@@ -1,8 +1,9 @@
 import { Devvit, JobContext, RichTextBuilder } from "@devvit/public-api";
 import { Preview } from "../components/Preview.js";
-import { checkSentenceAlreadyCreated, getPostSentence, incPostCountByOne, savePostedSentenceInfo, saveWildSentencePost } from "../utils/services.js";
+import { checkSentenceAlreadyCreated, getPostSentence, incPostCountByOne, incrUserLeaderboardScore, savePostedSentenceInfo, saveWildSentencePost } from "../utils/services.js";
 import { getRandomSentence } from "../utils/getRandomSentence.js";
 import { SentenceEntry } from "../../game/shared.js";
+import { gamePointsSystem } from "../utils/keys.js";
 
 const DEV_COMMENT = "Your username as author on the comment/post created by you would be visible once our app is approved by the reddit team. Thank You!"
 
@@ -77,6 +78,11 @@ export const createWildSentencePost = async (context : Devvit.Context | JobConte
             text: "",
             richtext: new RichTextBuilder().heading({level: 1} ,(h)=>{h.rawText("Developer's note: ")}).paragraph((p)=>{p.text({ text : devComment})})
         })
+    }
+
+    if(setSentence && !isPostedByJob){
+        // user created post
+        await incrUserLeaderboardScore(context, gamePointsSystem.onCreatePost);
     }
     
     if(navigateToPost && ui){

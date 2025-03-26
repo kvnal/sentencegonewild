@@ -5,8 +5,9 @@ import {
   TopWildComment,
   WebviewToBlockMessage,
 } from "../../game/shared.js";
-import { getPostSentence } from "../utils/services.js";
+import { getPostSentence, incrUserLeaderboardScore } from "../utils/services.js";
 import StyledButton from "../components/Button.js";
+import { gamePointsSystem } from "../utils/keys.js";
 
 export interface WildSentenceProps {
   context: Devvit.Context;
@@ -67,6 +68,8 @@ const WildSentence = (props: WildSentenceProps): JSX.Element => {
             text: data.payload.completedSentence,
             id: context.postId,
           });
+
+          await incrUserLeaderboardScore(context, gamePointsSystem.onComment);
 
           // submit page - check out some wild sentece button - on click - code
           context.ui.navigateTo(comment);
