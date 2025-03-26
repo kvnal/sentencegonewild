@@ -11,7 +11,7 @@ export const AnswerPage = ({ postId, incompleteSentence }: SentenceData) => {
   const [inputValues, setInputValues] = useState<{ [key: string]: string }>({});
 
   return (
-    <div className="relative flex h-full w-full flex-col justify-center p-4 overflow-hidden rounded-lg dark:bg-black bg-amber-50">
+    <div className="relative flex h-full w-full flex-col justify-center p-4 rounded-lg dark:bg-black bg-amber-50">
       {check ? (
         <div
           className={
