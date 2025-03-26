@@ -1,58 +1,101 @@
 import { Devvit, useWebView } from "@devvit/public-api";
 import {
   BlocksToWebviewMessage,
+  LeaderboardScore,
+  PostId,
   WebviewToBlockMessage,
 } from "../../game/shared.js";
-import { getRandomSentence } from "../utils/getRandomSentence.js";
 import StyledButton from "../components/Button.js";
 
-export interface WildSentenceProps {
+export interface PinnedHomeProps {
   context: Devvit.Context;
 }
-const PinnedHome = (props: WildSentenceProps): JSX.Element => {
-  const { context } = props;
-  const { mount } = useWebView<WebviewToBlockMessage, BlocksToWebviewMessage>({
-    // URL of your web view content
-    onMessage: async (event, { postMessage }) => {
-      const todaySentence = getRandomSentence();
-      console.log("Recieved message from webview", event);
+const PinnedHome = (props: PinnedHomeProps): JSX.Element => {
+  const { context } = props; // For username if needed.
 
+  const createSentence = useWebView<
+    WebviewToBlockMessage,
+    BlocksToWebviewMessage
+  >({
+    onMessage: async (event, { postMessage }) => {
       const data = event as unknown as WebviewToBlockMessage;
 
       if (data.type === "INIT") {
-        //  send question to webview
-
         postMessage({
           type: "INIT_RESPONSE",
           payload: {
-            postId: context.postId!,
-            incompleteSentence: todaySentence.sentence,
+            page: "create_sentence",
           },
-        }); // Random Sentece will be entered here
+        });
       }
 
-      if (data.type == "SUBMIT") {
+      if (data.type == "SUBMIT_SENTENCE") {
         // do the redis? and create a comment
         // changeview to check submitted page
-        console.log("User completed sentence", data.payload.completedSentence);
-        console.log("postid", context.postId);
+        console.log("User entered new sentence", data.payload.newSentence);
 
-        if (context.postId) {
-          let comment = await context.reddit.submitComment({
-            text: data.payload.completedSentence,
-            id: context.postId,
-          });
-
-          // submit page - check out some wild sentece button - on click - code
-          context.ui.navigateTo(comment);
-        }
+        // To-do: create new post.
+        //   let comment = await context.reddit.submitComment({
+        //     text: data.payload.new,
+        //     id: context.postId,
+        //  )}
+        //   // submit page - check out some wild sentece button - on click - code
+        //   context.ui.navigateTo(comment);
+        //
       }
     },
     onUnmount() {
       // _context.ui.showToast('Web view closed!');
-      console.log("Webview closed!");
+      console.log("Create Sentence closed!");
     },
   });
+  const help = useWebView<WebviewToBlockMessage, BlocksToWebviewMessage>({
+    onMessage: async (event, { postMessage }) => {
+      const data = event as unknown as WebviewToBlockMessage;
+
+      if (data.type === "INIT") {
+        postMessage({
+          type: "INIT_RESPONSE",
+          payload: {
+            page: "help",
+          },
+        });
+      }
+    },
+    onUnmount() {
+      console.log("Help closed!");
+    },
+  });
+  const leaderboard = useWebView<WebviewToBlockMessage, BlocksToWebviewMessage>(
+    {
+      onMessage: async (event, { postMessage }) => {
+        const leaderboardData: LeaderboardScore[] = [
+          // Dummy Data
+          { username: "r/dummy", score: 2302, rank: 2 },
+          { username: "r/dummyla", score: 2151, rank: 3 },
+          { username: "r/newdummy", score: 3467, rank: 1 },
+          { username: "r/verydummy", score: 1172, rank: 5 },
+          { username: "r/maakidummy", score: 1398, rank: 4 },
+          { username: "r/noobdummy", score: 21, rank: 23 },
+        ];
+
+        const data = event as unknown as WebviewToBlockMessage;
+
+        if (data.type === "INIT") {
+          postMessage({
+            type: "INIT_RESPONSE",
+            payload: {
+              page: "leaderboard",
+              leaderboard: leaderboardData,
+            },
+          });
+        }
+      },
+      onUnmount() {
+        console.log("Leaderboard closed!");
+      },
+    }
+  );
 
   // Upvote
   // uname
@@ -105,7 +148,7 @@ const PinnedHome = (props: WildSentenceProps): JSX.Element => {
           darkTextColor: "#000000",
         }}
         text="Create Sentence"
-        onPress={() => mount()}
+        onPress={() => createSentence.mount()}
       />
       <StyledButton
         width="30%"
@@ -119,7 +162,7 @@ const PinnedHome = (props: WildSentenceProps): JSX.Element => {
           darkTextColor: "#000000",
         }}
         text="Leaderboard"
-        onPress={() => mount()}
+        onPress={() => leaderboard.mount()}
       />
       <StyledButton
         width="30%"
@@ -133,7 +176,7 @@ const PinnedHome = (props: WildSentenceProps): JSX.Element => {
           darkTextColor: "#000000",
         }}
         text="Help"
-        onPress={() => mount()}
+        onPress={() => help.mount()}
       />
     </vstack>
   );

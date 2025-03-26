@@ -1,10 +1,14 @@
-// import { useSetPage } from '../hooks/usePage';
 import { sendToDevvit } from "../utils";
-import { SentenceData } from "../shared";
+import { PostId } from "../shared";
 import { DynamicInputs } from "../components/DynamicInputs";
 import { useState } from "react";
 
-export const AnswerPage = ({ postId, incompleteSentence }: SentenceData) => {
+export interface AnswerPageProps {
+  postId: PostId;
+  incompleteSentence: string;
+}
+
+export const AnswerPage = ({ postId, incompleteSentence }: AnswerPageProps) => {
   // const setPage = useSetPage();
   const [result, setResult] = useState<string>("");
   const [check, setCheck] = useState<boolean>(false);
@@ -42,7 +46,7 @@ export const AnswerPage = ({ postId, incompleteSentence }: SentenceData) => {
       <div className="flex justify-center w-full">
         <button
           type="submit"
-          className="md:w-1/6 w-1/2 flex items-center justify-center rounded-full bg-sky-900 disabled:bg-gray-100 dark:bg-lime-300 dark:disabled:bg-zinc-800 text-white dark:text-black p-2"
+          className="md:w-1/6 w-1/2 flex items-center justify-center rounded-full bg-sky-900 disabled:bg-gray-100 dark:bg-lime-300 dark:disabled:bg-zinc-800 text-white dark:text-black p-2 font-bold"
           onClick={() => {
             setCheck(!check);
           }}
@@ -54,7 +58,7 @@ export const AnswerPage = ({ postId, incompleteSentence }: SentenceData) => {
         {check && (
           <button
             type="submit"
-            className="md:w-1/6 w-1/2 mt-2 flex items-center justify-center rounded-full bg-sky-900 disabled:bg-gray-100 dark:bg-lime-300 dark:disabled:bg-zinc-800 text-white dark:text-black p-2"
+            className="md:w-1/6 w-1/2 mt-2 flex items-center justify-center rounded-full bg-sky-900 disabled:bg-gray-100 dark:bg-lime-300 dark:disabled:bg-zinc-800 text-white dark:text-black p-2 font-bold"
             onClick={() => {
               sendToDevvit({
                 // Send completed message to Devvit
@@ -69,24 +73,6 @@ export const AnswerPage = ({ postId, incompleteSentence }: SentenceData) => {
             Submit ✅
           </button>
         )}
-      </div>
-      <div className="text-left dark:text-white mt-10">
-        <div className=" dark:text-white text-black text-lg mb-4">
-          Top wild comment:
-        </div>
-        <div className="flex">
-          <div className=" dark:text-white text-black">Username:</div>
-          <div className=" dark:text-white text-black ms-2">Dummy Username</div>
-        </div>
-        <div className="flex">
-          <div className=" dark:text-white text-black">Points:</div>
-          <div className=" dark:text-white text-black ms-2">00</div>
-        </div>
-        <div className=" dark:text-white text-black">Completed Sentence:</div>
-        <div className=" dark:text-white text-black">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </div>
       </div>
     </div>
   );

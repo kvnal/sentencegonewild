@@ -1,5 +1,5 @@
 import { Devvit, JobContext, Post } from "@devvit/public-api";
-import { IRedisPostData, IRedisUsedSentence, PostHStorage, PostId, PostType, SentenceData, SentenceEntry } from "../../game/shared.js";
+import { IRedisPostData, IRedisUsedSentence, PostHStorage, PostId, PostType, SentenceEntry } from "../../game/shared.js";
 import { redisKey, postKey } from "./keys.js";
 
 export const getPostType = async(context:Devvit.Context, postId: PostId) => {
