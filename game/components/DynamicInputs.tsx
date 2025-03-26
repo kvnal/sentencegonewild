@@ -84,7 +84,7 @@ export const DynamicInputs: React.FC<DynamicInputsProps> = ({
                   onChange={(event) =>
                     handleInputChange(`end-${lineIndex}`, event.target.value)
                   }
-                  placeholder="Type here..."
+                  placeholder="click to type!"
                 />
               </div>
             )}

@@ -2,6 +2,7 @@ import { Devvit, useState, useWebView } from "@devvit/public-api";
 import {
   BlocksToWebviewMessage,
   PostId,
+  TopWildComment,
   WebviewToBlockMessage,
 } from "../../game/shared.js";
 import { getPostSentence } from "../utils/services.js";
@@ -21,7 +22,21 @@ const WildSentence = (props: WildSentenceProps): JSX.Element => {
     return postSentence; // Try others to test
   });
 
-  const { mount } = useWebView<WebviewToBlockMessage, BlocksToWebviewMessage>({
+  const [topWildComment] = useState<TopWildComment>(async () => {
+    const topWildComment: TopWildComment = {
+      // Dummy, replace with API call
+      username: "r/DevvitDummy",
+      score: 21,
+      wildComment:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    };
+    return topWildComment; // Try others to test
+  });
+
+  const wildSentence = useWebView<
+    WebviewToBlockMessage,
+    BlocksToWebviewMessage
+  >({
     // URL of your web view content
     onMessage: async (event, { postMessage }) => {
       console.log("Recieved message from webview", event);
@@ -34,7 +49,8 @@ const WildSentence = (props: WildSentenceProps): JSX.Element => {
         postMessage({
           type: "INIT_RESPONSE",
           payload: {
-            postId: context.postId!,
+            page: "home",
+            postId: context.postId as PostId,
             incompleteSentence: postSentence,
           },
         }); // Random Sentece will be entered here
@@ -59,7 +75,7 @@ const WildSentence = (props: WildSentenceProps): JSX.Element => {
     },
     onUnmount() {
       // _context.ui.showToast('Web view closed!');
-      console.log("Webview closed!");
+      console.log("Wild Sentence Answer Page closed!");
     },
   });
 
@@ -97,27 +113,60 @@ const WildSentence = (props: WildSentenceProps): JSX.Element => {
       height="100%"
       width="100%"
       gap="medium"
-      alignment="center middle"
+      alignment="start middle"
+      padding="medium"
       darkBackgroundColor="#000000"
       lightBackgroundColor="#fffbeb"
     >
-      <text size="xlarge" darkColor="#ffffff" lightColor="#000000">
-        {postSentence.replace("_", "____________").replace("/", "\n")}
+      <text size="xlarge" darkColor="#ffffff" lightColor="#000000" wrap>
+        {postSentence.replace(/_/g, "____________").replace("/", "\n")}
       </text>
-      <StyledButton
-        width="30%"
-        height="auto"
-        style={{
-          darkBorderColor: "#bbf451",
-          darkBackgroundColor: "#bbf451",
-          lightBackgroundColor: "#024a70",
-          lightBorderColor: "#024a70",
-          lightTextColor: "#ffffff",
-          darkTextColor: "#000000",
-        }}
-        text="Answer!"
-        onPress={() => mount()}
-      />
+      <spacer size="small" />
+      <hstack
+        width="100%"
+        gap="medium"
+        alignment="center middle"
+        darkBackgroundColor="#000000"
+        lightBackgroundColor="#fffbeb"
+      >
+        <StyledButton
+          width="30%"
+          height="auto"
+          style={{
+            darkBorderColor: "#bbf451",
+            darkBackgroundColor: "#bbf451",
+            lightBackgroundColor: "#024a70",
+            lightBorderColor: "#024a70",
+            lightTextColor: "#ffffff",
+            darkTextColor: "#000000",
+          }}
+          text="Answer!"
+          onPress={() => wildSentence.mount()}
+        />
+      </hstack>
+      {topWildComment?.username &&
+        topWildComment?.score &&
+        topWildComment?.wildComment && (
+          <>
+            <spacer size="large" />
+            <text size="large" darkColor="#ffffff" lightColor="#000000">Top wild comment:</text>
+            <hstack>
+              <text darkColor="#ffffff" lightColor="#000000">Username:</text>
+              <spacer size="small" />
+              <text weight="bold" darkColor="#ffffff" lightColor="#000000">{topWildComment.username}</text>
+            </hstack>
+            <hstack>
+              <text darkColor="#ffffff" lightColor="#000000">Score:</text>
+              <spacer size="small" />
+              <text weight="bold" darkColor="#ffffff" lightColor="#000000">{topWildComment.score}</text>
+            </hstack>
+            <vstack>
+              <text darkColor="#ffffff" lightColor="#000000">Completed Sentence:</text>
+              <spacer size="small" />
+              <text darkColor="#ffffff" lightColor="#000000" wrap>{topWildComment.wildComment}</text>
+            </vstack>
+          </>
+        )}
     </vstack>
   );
 };
