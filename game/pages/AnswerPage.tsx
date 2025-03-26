@@ -1,7 +1,7 @@
 // import { useSetPage } from '../hooks/usePage';
 import { sendToDevvit } from "../utils";
 import { SentenceData } from "../shared";
-import { DynamicInputs } from "../components/DynmicInputs";
+import { DynamicInputs } from "../components/DynamicInputs";
 import { useState } from "react";
 
 export const AnswerPage = ({ postId, incompleteSentence }: SentenceData) => {

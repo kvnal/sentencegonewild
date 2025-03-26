@@ -1,20 +1,29 @@
-import { Devvit, useWebView } from "@devvit/public-api";
+import { Devvit, useState, useWebView } from "@devvit/public-api";
 import {
   BlocksToWebviewMessage,
+  PostId,
   WebviewToBlockMessage,
 } from "../../game/shared.js";
-import { getRandomSentence } from "../utils/getRandomSentence.js";
-import StyledButton from "./Button.js";
+import { getPostSentence } from "../utils/services.js";
+import StyledButton from "../components/Button.js";
 
 export interface WildSentenceProps {
   context: Devvit.Context;
+  postId: PostId;
 }
-const PinnedHome = (props: WildSentenceProps): JSX.Element => {
-  const { context } = props;
+const WildSentence = (props: WildSentenceProps): JSX.Element => {
+  const { context, postId } = props;
+
+  //   //todo getPostSentence(context,postId)
+
+  const [postSentence] = useState<string>(async () => {
+    const postSentence = (await getPostSentence(context, postId)) ?? "";
+    return postSentence; // Try others to test
+  });
+
   const { mount } = useWebView<WebviewToBlockMessage, BlocksToWebviewMessage>({
     // URL of your web view content
     onMessage: async (event, { postMessage }) => {
-      const todaySentence = getRandomSentence();
       console.log("Recieved message from webview", event);
 
       const data = event as unknown as WebviewToBlockMessage;
@@ -26,7 +35,7 @@ const PinnedHome = (props: WildSentenceProps): JSX.Element => {
           type: "INIT_RESPONSE",
           payload: {
             postId: context.postId!,
-            incompleteSentence: todaySentence.sentence,
+            incompleteSentence: postSentence,
           },
         }); // Random Sentece will be entered here
       }
@@ -92,7 +101,9 @@ const PinnedHome = (props: WildSentenceProps): JSX.Element => {
       darkBackgroundColor="#000000"
       lightBackgroundColor="#fffbeb"
     >
-      <text size="large">{"Pinned Home (Image Will Replace)"}</text>
+      <text size="xlarge" darkColor="#ffffff" lightColor="#000000">
+        {postSentence.replace("_", "____________").replace("/", "\n")}
+      </text>
       <StyledButton
         width="30%"
         height="auto"
@@ -104,39 +115,11 @@ const PinnedHome = (props: WildSentenceProps): JSX.Element => {
           lightTextColor: "#ffffff",
           darkTextColor: "#000000",
         }}
-        text="Create Sentence"
-        onPress={() => mount()}
-      />
-      <StyledButton
-        width="30%"
-        height="auto"
-        style={{
-          darkBorderColor: "#bbf451",
-          darkBackgroundColor: "#bbf451",
-          lightBackgroundColor: "#024a70",
-          lightBorderColor: "#024a70",
-          lightTextColor: "#ffffff",
-          darkTextColor: "#000000",
-        }}
-        text="Leaderboard"
-        onPress={() => mount()}
-      />
-      <StyledButton
-        width="30%"
-        height="auto"
-        style={{
-          darkBorderColor: "#bbf451",
-          darkBackgroundColor: "#bbf451",
-          lightBackgroundColor: "#024a70",
-          lightBorderColor: "#024a70",
-          lightTextColor: "#ffffff",
-          darkTextColor: "#000000",
-        }}
-        text="Help"
+        text="Answer!"
         onPress={() => mount()}
       />
     </vstack>
   );
 };
 
-export default PinnedHome;
+export default WildSentence;
