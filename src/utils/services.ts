@@ -1,5 +1,6 @@
-import { Devvit } from "@devvit/public-api";
-import { PostHStorage, PostId, PostType } from "../../game/shared.js";
+import { Devvit, Post } from "@devvit/public-api";
+import { IRedisPostData, IRedisUsedSentence, PostHStorage, PostId, PostType, SentenceData, SentenceEntry } from "../../game/shared.js";
+import { redisKey } from "./keys.js";
 
 const keys = {
     postData: (postId: PostId) => `post:${postId}`,
@@ -47,3 +48,56 @@ export const getUsername = async (context: Devvit.Context) => {
     }
     return null;
   };
+
+
+
+  export const incPostCountByOne = async (context: Devvit.Context) =>{
+    const {redis} = context;
+    let totalPostCount = await redis.incrBy(redisKey.totalSentencePostCount,1);
+    console.log("post count", totalPostCount)
+    return totalPostCount;
+  }
+  
+  
+
+  export const savePostedSentenceInfo = async (context : Devvit.Context, sentence : SentenceEntry, post : Post) =>{
+    const {redis} = context;
+
+    // save the used sentence id
+    let data : IRedisUsedSentence = {};
+    data[sentence.id] = 'true';
+
+    await redis.hSet(redisKey.GameSentence, data);
+    
+
+    // save the created post: postid -> sentence
+    let postData : IRedisPostData = {};
+    postData[post.id] = sentence.sentence;
+
+    await redis.hSet(redisKey.postSentence, postData);
+
+    return 1;
+  }
+  
+  export const checkSentenceAlreadyCreated = async (context : Devvit.Context, sentenceId : string) =>{
+    const {redis} = context;
+    const isUsed = await redis.hGet(redisKey.GameSentence, sentenceId);
+    
+    if(!isUsed)
+      return false;
+    
+    // exists
+    return true;
+  }
+
+
+  
+  export const getPostSentence = async (context : Devvit.Context, postId : string) =>{
+    const {redis} = context;
+    const sentence = await redis.hGet(redisKey.postSentence, postId);
+    
+    // exists
+    return sentence;
+  }
+
+

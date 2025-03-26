@@ -56,3 +56,11 @@ export interface SentenceEntry {
 export interface SentenceDataCollection {
   all: SentenceEntry[];
 }
+
+export interface IRedisPostData {
+  [postId : string] : string
+}
+
+export interface IRedisUsedSentence {
+  [postId : string] : "true"
+}

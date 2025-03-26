@@ -1,12 +1,15 @@
 import { Context, Devvit, useState } from "@devvit/public-api";
 import { PostId, PostType } from "../../game/shared.js";
-import { getPostType, getUsername } from "../utils/services.js";
+import { getPostSentence, getPostType, getUsername } from "../utils/services.js";
 import WildSentence from "../components/WildSentence.js";
 import PinnedHome from "../components/PinnedHome.js";
 
 const Router: Devvit.CustomPostComponent = (context: Context) => {
-    const postId = context.postId as PostId;
-    const [data] = useState<{
+  const postId = context.postId as PostId;
+
+  //todo getPostSentence(context,postId)
+
+  const [data] = useState<{
         postType: PostType;
         username: string | null;
       }>(async () => {

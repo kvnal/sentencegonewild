@@ -1,16 +1,20 @@
 import { Devvit, useWebView } from "@devvit/public-api";
 import { BlocksToWebviewMessage, WebviewToBlockMessage } from "../../game/shared.js";
 import { getRandomSentence } from "../utils/getRandomSentence.js";
+import { getPostSentence } from "../utils/services.js";
 
 export interface WildSentenceProps{
     context: Devvit.Context;
 }
 const WildSentence = (props: WildSentenceProps): JSX.Element => {
     const {context} = props;
+    
+    // Todo get sentence from route....
+    const postSentence = "this is the sentence for this post " + context.postId;
+
     const {mount} = useWebView<WebviewToBlockMessage, BlocksToWebviewMessage>({
       // URL of your web view content
       onMessage: async (event, {postMessage}) => {
-        const todaySentence = getRandomSentence();
         console.log("Recieved message from webview", event);
 
         const data = event as unknown as WebviewToBlockMessage;
@@ -19,7 +23,7 @@ const WildSentence = (props: WildSentenceProps): JSX.Element => {
           //  send question to webview
 
           postMessage({type: "INIT_RESPONSE",
-            payload: {postId: context.postId!,  incompleteSentence: todaySentence.sentence}}); // Random Sentece will be entered here
+            payload: {postId: context.postId!,  incompleteSentence: postSentence}}); // Random Sentece will be entered here
           }
 
         if(data.type == "SUBMIT"){
@@ -86,7 +90,7 @@ const WildSentence = (props: WildSentenceProps): JSX.Element => {
         {/* <button appearance="primary" onPress={() => _context.ui.showForm(myForm)}>
          Form
         </button> */}
-        <text size="large">{"Wild Sentence"}</text>
+        <text size="large">{postSentence}</text>
         <button width="30%" appearance="primary" onPress={() =>mount()}>
          Answer!
         </button>
