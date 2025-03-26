@@ -21,7 +21,11 @@ export interface PostHStorage{
 }
 
 export type Page =
-  | "home";
+  | "home" // Answer input page
+  | "create_sentence"
+  | "help"
+  | "leaderboard"
+  | "test"; 
 
 export type WebviewToBlockMessage = { type: "INIT" } | {
   type: "SUBMIT";
