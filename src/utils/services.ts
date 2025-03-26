@@ -1,20 +1,16 @@
 import { Devvit, Post } from "@devvit/public-api";
 import { IRedisPostData, IRedisUsedSentence, PostHStorage, PostId, PostType, SentenceData, SentenceEntry } from "../../game/shared.js";
-import { redisKey } from "./keys.js";
-
-const keys = {
-    postData: (postId: PostId) => `post:${postId}`,
-}
+import { redisKey, postKey } from "./keys.js";
 
 export const getPostType = async(context:Devvit.Context, postId: PostId) => {
-    const key = keys.postData(postId);
+    const key = postKey.postData(postId);
     const postType = await context.redis.hGet(key, 'postType') as PostType;
     const defaultPostType: PostType = PostType.WILDSENTENCE;
     return (postType ?? defaultPostType) as PostType;
 }
 
 export const savePinnedPost = async(context:Devvit.Context, postId: PostId): Promise<void> => {
-    const key = keys.postData(postId);
+    const key = postKey.postData(postId);
     const storedType: PostHStorage = {
         postId,
         postType: PostType.PINNED,
@@ -23,7 +19,7 @@ export const savePinnedPost = async(context:Devvit.Context, postId: PostId): Pro
 }
 
 export const saveWildSentencePost = async(context:Devvit.Context, postId: PostId): Promise<void> => {
-    const key = keys.postData(postId);
+    const key = postKey.postData(postId);
     const storedType: PostHStorage = {
         postId,
         postType: PostType.WILDSENTENCE,
