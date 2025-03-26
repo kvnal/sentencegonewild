@@ -1,12 +1,8 @@
 // Learn more at developers.reddit.com/docs
-import { Devvit, Post, useForm, useState, useWebView } from '@devvit/public-api';
+import { Devvit } from '@devvit/public-api';
 import './scheduler/autoPost.js'
 import { auto_post_turn_off_menuItem, auto_post_turn_on_menuItem, PinnedPost, WildSentencePost} from './actions/MenuItemsList.js';
-import { DevvitMessage, WebViewMessage } from './message.js';
-import { Preview } from './components/Preview.js';
-import { BlocksToWebviewMessage, WebviewToBlockMessage } from '../game/shared.js';
-import { getRandomSentence } from './utils/getRandomSentence.js';
-import { savePinnedPost, saveWildSentencePost } from './utils/services.js';
+
 import Router from './routes/Router.js';
 
 Devvit.configure({
@@ -18,8 +14,9 @@ Devvit.configure({
 
 // Add a menu item to the subreddit menu for instantiating the new experience post
 Devvit.addMenuItem(PinnedPost);
-
 Devvit.addMenuItem(WildSentencePost);
+Devvit.addMenuItem(auto_post_turn_on_menuItem);
+Devvit.addMenuItem(auto_post_turn_off_menuItem);
 
 // Add a post type definition
 Devvit.addCustomPostType({ 
@@ -113,11 +110,4 @@ Devvit.addCustomPostType({
   //     </vstack>
   //   );
   // },
-
-
-
-
-
-Devvit.addMenuItem(auto_post_turn_on_menuItem);
-Devvit.addMenuItem(auto_post_turn_off_menuItem);
 export default Devvit;
