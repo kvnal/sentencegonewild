@@ -105,7 +105,7 @@ export const DynamicInputs: React.FC<DynamicInputsProps> = ({
                   <div className="mx-2 mt-2">{sanitizeAndRender(part)}</div>
                 )}
                 {partIndex < parts.length - 1 && (
-                  <div className="mx-4 mt-2">
+                  <div className="mx-4 mt-2 w-full" id={`ResizingTextArea${partIndex}`}>
                     <ResizingTextArea
                       value={inputValues[`${lineIndex}-${partIndex}`] || ""}
                       onChange={(event) =>
@@ -114,7 +114,7 @@ export const DynamicInputs: React.FC<DynamicInputsProps> = ({
                           event.target.value
                         )
                       }
-                      placeholder="Fill in the blank"
+                      placeholder="click to type!"
                     />
                   </div>
                 )}
