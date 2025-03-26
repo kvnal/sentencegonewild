@@ -135,7 +135,14 @@ const PinnedHome = (props: PinnedHomeProps): JSX.Element => {
       darkBackgroundColor="#000000"
       lightBackgroundColor="#fffbeb"
     >
-      <text size="large">{"Pinned Home (Image Will Replace)"}</text>
+      <image
+          url="sgw-logo-card-large.png"
+          description="Logo"
+          height={'200px'}
+          width={'300px'}
+          imageHeight={'240px'}
+          imageWidth={'240px'}
+        />
       <StyledButton
         width="30%"
         height="auto"

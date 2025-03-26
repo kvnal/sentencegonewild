@@ -17,11 +17,14 @@ export const CreatePage = () => {
         Use single _ (underscore) for empty space and / (forward slash) for new
         line.
       </p>
-      <ResizingTextArea
-        value={value}
-        onChange={(event) => setValue(event.target.value)}
-        placeholder="click to type!"
-      />
+      <div className="flex flex-wrap">
+        <ResizingTextArea
+          value={value}
+          onChange={(event) => setValue(event.target.value)}
+          placeholder="click to type!"
+        />
+      </div>
+
       <div className="flex justify-center w-full">
         <button
           type="submit"

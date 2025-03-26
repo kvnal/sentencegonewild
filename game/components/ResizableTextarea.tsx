@@ -1,6 +1,6 @@
 import React, { ChangeEventHandler } from "react";
 
-const MIN_TEXTAREA_HEIGHT = 40;
+const MIN_TEXTAREA_HEIGHT = 10;
 
 interface ResizingTextAreaProps {
   value: string;
@@ -8,14 +8,11 @@ interface ResizingTextAreaProps {
   placeholder: string;
 }
 
-
 const ResizingTextArea = (props: ResizingTextAreaProps) => {
   const { value, onChange, placeholder } = props;
   const textareaRef = React.useRef<HTMLTextAreaElement>(null);
   // const [value, setValue] = React.useState<string>("");
   const onTextAreaChange: ChangeEventHandler<HTMLTextAreaElement> = onChange;
-  
-
 
   React.useLayoutEffect(() => {
     // Reset height - important to shrink on delete
@@ -26,7 +23,6 @@ const ResizingTextArea = (props: ResizingTextAreaProps) => {
       textareaRef.current!.scrollHeight,
       MIN_TEXTAREA_HEIGHT
     )}px`;
-
   }, [value]);
 
   return (
@@ -37,7 +33,7 @@ const ResizingTextArea = (props: ResizingTextAreaProps) => {
         height: MIN_TEXTAREA_HEIGHT,
         resize: "none",
       }}
-      className="text-2xl w-full border-b-2 border-white focus:outline-none text-lime-300 focus:border-b-sky-400 overflow-hidden"
+      className="text-2xl w-full border-b-2 dark:border-white border-black focus:outline-none dark:text-lime-300 text-lime-900 dark:focus:border-b-sky-400 focus:border-b-sky-900 overflow-hidden"
       value={value}
       placeholder={placeholder}
     />

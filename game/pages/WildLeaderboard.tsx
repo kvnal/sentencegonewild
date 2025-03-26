@@ -1,3 +1,4 @@
+import LeaderboardTable from "../components/LeaderboardTable";
 import { LeaderboardScore } from "../shared";
 
 export interface LeaderboardPageProps {
@@ -5,18 +6,19 @@ export interface LeaderboardPageProps {
 }
 
 export const LeaderboardPage = ({ leaderboard }: LeaderboardPageProps) => {
-  console.log(leaderboard);
 
   return (
     <div className="relative flex h-full w-full flex-col justify-center p-4 rounded-lg dark:bg-black bg-amber-50">
       <div
         className={
-          "relative z-20 mb-4 mt-2 text-left w-full dark:text-white text-black"
+          "relative z-20 mb-8 mt-2 text-left w-full text-2xl dark:text-white text-black"
         }
       >
         Leaderboard
       </div>
-      <div className="w-full"><pre className="text-white text-xs">{JSON.stringify(leaderboard, null, 2)}</pre></div>
+      <div className="w-full">
+        <LeaderboardTable leaderboard={leaderboard} />
+      </div>
     </div>
   );
 };

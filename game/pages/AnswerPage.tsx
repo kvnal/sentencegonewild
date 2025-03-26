@@ -1,7 +1,7 @@
 import { sendToDevvit } from "../utils";
 import { PostId } from "../shared";
 import { DynamicInputs } from "../components/DynamicInputs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export interface AnswerPageProps {
   postId: PostId;
@@ -10,9 +10,15 @@ export interface AnswerPageProps {
 
 export const AnswerPage = ({ postId, incompleteSentence }: AnswerPageProps) => {
   // const setPage = useSetPage();
-  const [result, setResult] = useState<string>("");
+  const [result, setResult] = useState<string | undefined>("");
+  const [error, setError] = useState<boolean>(false);
   const [check, setCheck] = useState<boolean>(false);
   const [inputValues, setInputValues] = useState<{ [key: string]: string }>({});
+  console.log(`inputValues:${JSON.stringify(inputValues)}`);
+
+  useEffect(() => {
+    if (result !== undefined || result !== "") setError(false);
+  }, [result]);
 
   return (
     <div className="relative flex h-full w-full flex-col justify-center p-4 rounded-lg dark:bg-black bg-amber-50">
@@ -44,36 +50,57 @@ export const AnswerPage = ({ postId, incompleteSentence }: AnswerPageProps) => {
         </div>
       )}
       <div className="flex justify-center w-full">
-        <button
-          type="submit"
-          className="md:w-1/6 w-1/2 flex items-center justify-center rounded-full bg-sky-900 disabled:bg-gray-100 dark:bg-lime-300 dark:disabled:bg-zinc-800 text-white dark:text-black p-2 font-bold"
-          onClick={() => {
-            setCheck(!check);
-          }}
-        >
-          {check ? "Back" : "Check 👀"}
-        </button>
-      </div>
-      <div className="flex justify-center w-full">
-        {check && (
+        {!check && (
           <button
             type="submit"
-            className="md:w-1/6 w-1/2 mt-2 flex items-center justify-center rounded-full bg-sky-900 disabled:bg-gray-100 dark:bg-lime-300 dark:disabled:bg-zinc-800 text-white dark:text-black p-2 font-bold"
+            className={`md:w-1/6 w-1/2 flex items-center justify-center rounded-full  p-2 font-bold ${
+              error
+                ? "bg-red-500 text-black"
+                : "bg-sky-900 dark:bg-lime-300  text-white dark:text-black"
+            }`}
             onClick={() => {
-              sendToDevvit({
-                // Send completed message to Devvit
-                type: "SUBMIT",
-                payload: {
-                  postId: postId,
-                  completedSentence: result,
-                },
-              });
+              if (!(result === undefined || result === "")) setCheck(!check);
+              else setError(true);
             }}
           >
-            Submit ✅
+            Check 👀
           </button>
         )}
       </div>
+
+      {check && result && result != "" && (
+        <>
+          <div className="flex justify-center w-full">
+            <button
+              type="submit"
+              className="md:w-1/6 w-1/2 mt-2 flex items-center justify-center rounded-full bg-sky-900 disabled:bg-gray-100 dark:bg-lime-300 dark:disabled:bg-zinc-800 text-white dark:text-black p-2 font-bold"
+              onClick={() => {
+                sendToDevvit({
+                  // Send completed message to Devvit
+                  type: "SUBMIT",
+                  payload: {
+                    postId: postId,
+                    completedSentence: result,
+                  },
+                });
+              }}
+            >
+              Submit ✅
+            </button>
+          </div>
+          <div className="flex justify-center w-full">
+            <button
+              type="submit"
+              className="md:w-1/6 w-1/2 flex items-center justify-center rounded-full border-2 border-sky-900  dark:border-lime-300 bg-transparent dark:text-white text-sky-900 p-2 font-bold"
+              onClick={() => {
+                setCheck(!check);
+              }}
+            >
+              Back
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 };
