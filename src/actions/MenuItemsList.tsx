@@ -81,7 +81,7 @@ export const WildSentencePost: MenuItem = {
   forUserType: 'moderator',
   onPress: async (_event, context) => {
       // await incPostCountByOne(context);
-      await createWildSentencePost(context,true);
+      await createWildSentencePost(context, null, true);
 
   },
 }
