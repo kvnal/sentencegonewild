@@ -97,3 +97,50 @@ export const getUsername = async (context: Devvit.Context) => {
   }
 
 
+  export const getLeaderboard = async (context : Devvit.Context | JobContext, tillCount: number)=>{
+
+    const {redis} = context;
+
+    let scores = await redis.zRange(redisKey.leaderboard,0,tillCount, {
+      by: 'rank',
+      reverse: true
+    });
+
+    return scores;
+  }
+  
+  export const incrUserLeaderboardScore = async (context : Devvit.Context | JobContext, increaseBy: number)=>{
+
+    if(!context.userId) return;
+
+    const {redis} = context;
+
+    let score = await redis.zIncrBy(redisKey.leaderboard, context.userId, increaseBy);
+
+    return score;
+  }
+  
+  export const getUserLeaderboardScore = async (context : Devvit.Context | JobContext)=>{
+
+    if(!context.userId) return;
+
+    const {redis} = context;
+
+    let score = await redis.zScore(redisKey.leaderboard, context.userId);
+
+    return score;
+  }
+  
+  export const setUserLeaderboardScore = async (context : Devvit.Context | JobContext, setScore : number)=>{
+
+    if(!context.userId) return;
+
+    const {redis} = context;
+
+    let score = await redis.zAdd(redisKey.leaderboard, {member:context.userId, score : setScore});
+
+    return score;
+  }
+
+
+  
