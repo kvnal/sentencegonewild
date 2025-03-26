@@ -46,7 +46,7 @@ export const createWildSentencePost = async (context : Devvit.Context, navigateT
 
     await savePostedSentenceInfo(context, newPostSentence, post);
 
-    // await saveWildSentencePost(context, post.id);
+    await saveWildSentencePost(context, post.id);
     
     if(navigateToPost){
         // navigate only when post is created by user.

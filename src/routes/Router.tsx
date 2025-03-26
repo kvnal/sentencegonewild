@@ -23,6 +23,7 @@ const Router: Devvit.CustomPostComponent = (context: Context) => {
         "wildsentence": (
           <WildSentence
             context={context}
+            postId={postId}
           />
         ),
         "pinnedhome": (

@@ -4,11 +4,14 @@ import { usePage } from './hooks/usePage';
 import { useEffect, useState } from 'react';
 import { sendToDevvit } from './utils';
 import { useDevvitListener } from './hooks/useDevvitListener';
+import { AnswerPage } from './pages/AnswerPage';
 
 const getPage = (page: Page, { postId, incompleteSentence }: SentenceData) => {
   switch (page) {
-    case 'home':
+    case 'test':
       return <HomePage postId={postId} incompleteSentence = {incompleteSentence}/>;
+    case 'home':
+      return <AnswerPage postId={postId} incompleteSentence = {incompleteSentence}/>;
     default:
       throw new Error(`Unknown page: ${page}`);
   }

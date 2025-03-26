@@ -1,58 +1,72 @@
-import { Devvit, useWebView } from "@devvit/public-api";
-import { BlocksToWebviewMessage, WebviewToBlockMessage } from "../../game/shared.js";
-import { getRandomSentence } from "../utils/getRandomSentence.js";
+import { Devvit, useState, useWebView } from "@devvit/public-api";
+import {
+  BlocksToWebviewMessage,
+  PostId,
+  WebviewToBlockMessage,
+} from "../../game/shared.js";
 import { getPostSentence } from "../utils/services.js";
 
-export interface WildSentenceProps{
-    context: Devvit.Context;
+export interface WildSentenceProps {
+  context: Devvit.Context;
+  postId: PostId;
 }
 const WildSentence = (props: WildSentenceProps): JSX.Element => {
-    const {context} = props;
-    
-    // Todo get sentence from route....
-    const postSentence = "this is the sentence for this post " + context.postId;
+  const { context, postId } = props;
 
-    const {mount} = useWebView<WebviewToBlockMessage, BlocksToWebviewMessage>({
-      // URL of your web view content
-      onMessage: async (event, {postMessage}) => {
-        console.log("Recieved message from webview", event);
+  //   //todo getPostSentence(context,postId)
 
-        const data = event as unknown as WebviewToBlockMessage;
+  const [postSentence] = useState<string>(async () => {
+    const postSentence = (await getPostSentence(context, postId)) ?? "";
+    return postSentence; // Try others to test
+  });
 
-        if (data.type === 'INIT') {
-          //  send question to webview
+  const { mount } = useWebView<WebviewToBlockMessage, BlocksToWebviewMessage>({
+    // URL of your web view content
+    onMessage: async (event, { postMessage }) => {
+      console.log("Recieved message from webview", event);
 
-          postMessage({type: "INIT_RESPONSE",
-            payload: {postId: context.postId!,  incompleteSentence: postSentence}}); // Random Sentece will be entered here
-          }
+      const data = event as unknown as WebviewToBlockMessage;
 
-        if(data.type == "SUBMIT"){
-            // do the redis? and create a comment
-            // changeview to check submitted page
-            console.log("User completed sentence",data.payload.completedSentence);
-            console.log("postid",context.postId)
+      if (data.type === "INIT") {
+        //  send question to webview
 
-            if(context.postId){
-              let comment = await context.reddit.submitComment({text: data.payload.completedSentence, id: context.postId})
+        postMessage({
+          type: "INIT_RESPONSE",
+          payload: {
+            postId: context.postId!,
+            incompleteSentence: postSentence,
+          },
+        }); // Random Sentece will be entered here
+      }
 
-              // submit page - check out some wild sentece button - on click - code  
-              context.ui.navigateTo(comment);
-            }
+      if (data.type == "SUBMIT") {
+        // do the redis? and create a comment
+        // changeview to check submitted page
+        console.log("User completed sentence", data.payload.completedSentence);
+        console.log("postid", context.postId);
 
+        if (context.postId) {
+          let comment = await context.reddit.submitComment({
+            text: data.payload.completedSentence,
+            id: context.postId,
+          });
+
+          // submit page - check out some wild sentece button - on click - code
+          context.ui.navigateTo(comment);
         }
+      }
+    },
+    onUnmount() {
+      // _context.ui.showToast('Web view closed!');
+      console.log("Webview closed!");
+    },
+  });
 
-      },
-      onUnmount() {
-        // _context.ui.showToast('Web view closed!');
-        console.log("Webview closed!")
-      },
-    });
+  // Upvote
+  // uname
+  // Completed sentence\
 
-    // Upvote
-    // uname
-    // Completed sentence\
-
-    /*
+  /*
     Home Page Post
     Photo
     // Create
@@ -65,7 +79,7 @@ const WildSentence = (props: WildSentenceProps): JSX.Element => {
 
     */
 
-    /* Block 
+  /* Block 
      Incomplete Sentence
      Top Comment
      Answer button
@@ -76,10 +90,10 @@ const WildSentence = (props: WildSentenceProps): JSX.Element => {
      - Check screen (Optional)
      - Submit   
     */
-    
-    return (
-      <vstack height="100%" width="100%" gap="medium" alignment="center middle">
-        {/* <text size="large">{`Click counter: ${counter}`}</text>
+
+  return (
+    <vstack height="100%" width="100%" gap="medium" alignment="center middle">
+      {/* <text size="large">{`Click counter: ${counter}`}</text>
         <text size="large">{`Click counter: ${counter}`}</text>
         <text size="large">{`Click counter: ${counter}`}</text>
         <text size="large">{`Click counter: ${counter}`}</text>
@@ -87,15 +101,15 @@ const WildSentence = (props: WildSentenceProps): JSX.Element => {
           Click me! ok
         </button> */}
 
-        {/* <button appearance="primary" onPress={() => _context.ui.showForm(myForm)}>
+      {/* <button appearance="primary" onPress={() => _context.ui.showForm(myForm)}>
          Form
         </button> */}
-        <text size="large">{postSentence}</text>
-        <button width="30%" appearance="primary" onPress={() =>mount()}>
-         Answer!
-        </button>
-      </vstack>
-    );
-  }
+      <text size="large">{postSentence}</text>
+      <button width="30%" appearance="primary" onPress={() => mount()}>
+        Answer!
+      </button>
+    </vstack>
+  );
+};
 
-  export default WildSentence;
+export default WildSentence;
