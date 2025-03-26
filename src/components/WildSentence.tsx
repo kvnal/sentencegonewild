@@ -5,6 +5,7 @@ import {
   WebviewToBlockMessage,
 } from "../../game/shared.js";
 import { getPostSentence } from "../utils/services.js";
+import StyledButton from "./Button.js";
 
 export interface WildSentenceProps {
   context: Devvit.Context;
@@ -17,7 +18,7 @@ const WildSentence = (props: WildSentenceProps): JSX.Element => {
 
   const [postSentence] = useState<string>(async () => {
     const postSentence = (await getPostSentence(context, postId)) ?? "";
-    return postSentence; // Try others to test
+    return postSentence.replace('_', '____________').replace('/', '\n'); // Try others to test
   });
 
   const { mount } = useWebView<WebviewToBlockMessage, BlocksToWebviewMessage>({
@@ -92,22 +93,29 @@ const WildSentence = (props: WildSentenceProps): JSX.Element => {
     */
 
   return (
-    <vstack height="100%" width="100%" gap="medium" alignment="center middle">
-      {/* <text size="large">{`Click counter: ${counter}`}</text>
-        <text size="large">{`Click counter: ${counter}`}</text>
-        <text size="large">{`Click counter: ${counter}`}</text>
-        <text size="large">{`Click counter: ${counter}`}</text>
-        <button appearance="primary" onPress={() => setCounter((counter) => counter + 1)}>
-          Click me! ok
-        </button> */}
-
-      {/* <button appearance="primary" onPress={() => _context.ui.showForm(myForm)}>
-         Form
-        </button> */}
+    <vstack
+      height="100%"
+      width="100%"
+      gap="medium"
+      alignment="center middle"
+      darkBackgroundColor="#000000"
+      lightBackgroundColor="#fffbeb"
+    >
       <text size="large">{postSentence}</text>
-      <button width="30%" appearance="primary" onPress={() => mount()}>
-        Answer!
-      </button>
+      <StyledButton
+        width="30%"
+        height="auto"
+        style={{
+          darkBorderColor: "#bbf451",
+          darkBackgroundColor: "#bbf451",
+          lightBackgroundColor: "#024a70",
+          lightBorderColor: "#024a70",
+          lightTextColor: "#ffffff",
+          darkTextColor: "#000000",
+        }}
+        text="Answer!"
+        onPress={() => mount()}
+      />
     </vstack>
   );
 };
