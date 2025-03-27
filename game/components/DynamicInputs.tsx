@@ -5,7 +5,6 @@ import ResizingTextArea from "./ResizableTextarea";
 
 interface DynamicInputsProps {
   sentence: string;
-  onConsolidatedChange?: (result: string) => void;
   inputValues: {
     [key: string]: string;
   };
@@ -18,7 +17,6 @@ interface DynamicInputsProps {
 
 export const DynamicInputs: React.FC<DynamicInputsProps> = ({
   sentence,
-  onConsolidatedChange,
   inputValues,
   setInputValues,
 }) => {
@@ -31,54 +29,7 @@ export const DynamicInputs: React.FC<DynamicInputsProps> = ({
     return parse(clean);
   };
 
-  // Function to get the consolidated sentence with validation
-  const getConsolidatedSentence = (newValues: {
-    [key: string]: string;
-  }): string | undefined => {
-    const lines = sentence.split("/").map((line) => line.trim());
-    let result = "";
-    const newErrors: { [key: string]: boolean } = {};
-
-    lines.forEach((line, lineIndex) => {
-      const parts = line.split("_");
-      let lineResult = "";
-
-      parts.forEach((part, partIndex) => {
-        lineResult += part;
-
-        if (partIndex < parts.length - 1) {
-          const value = newValues[`${lineIndex}-${partIndex}`]?.trim() || "";
-          if (value === "") {
-            newErrors[`${lineIndex}-${partIndex}`] = true; // Mark input as invalid
-          } else {
-            newErrors[`${lineIndex}-${partIndex}`] = false; // Clear previous error
-          }
-          lineResult += value;
-        }
-      });
-
-      // Add input at end if no underscores and it's the last line
-      if (parts.length === 1 && lineIndex === lines.length - 1) {
-        const value = newValues[`end-${lineIndex}`]?.trim() || "";
-        if (value === "") {
-          newErrors[`end-${lineIndex}`] = true; // Mark input as invalid
-        } else {
-          newErrors[`end-${lineIndex}`] = false; // Clear previous error
-        }
-        lineResult += value;
-      }
-
-      result += lineResult;
-      if (lineIndex < lines.length - 1) {
-        result += " / ";
-      }
-    });
-    console.log(`Errors: ${JSON.stringify(newErrors, null, 2)} ${Object.values(newErrors).some((hasError) => hasError)}`);
-    if (!Object.values(newErrors).every((hasError) => !hasError)) { 
-      return "";
-    }
-    return result
-  };
+  
   const processSentence = (text: string) => {
     const lines = text.split("/").map((line) => line.trim());
 
@@ -146,12 +97,6 @@ export const DynamicInputs: React.FC<DynamicInputsProps> = ({
       [key]: value,
     };
     setInputValues(newValues);
-
-    // Call the callback with the consolidated sentence whenever inputs change
-    if (onConsolidatedChange) {
-      const consolidated = getConsolidatedSentence(newValues);
-      if (consolidated) onConsolidatedChange(consolidated);
-    }
   };
 
   return (

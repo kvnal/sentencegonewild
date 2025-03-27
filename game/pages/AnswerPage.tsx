@@ -14,11 +14,64 @@ export const AnswerPage = ({ postId, incompleteSentence }: AnswerPageProps) => {
   const [error, setError] = useState<boolean>(false);
   const [check, setCheck] = useState<boolean>(false);
   const [inputValues, setInputValues] = useState<{ [key: string]: string }>({});
-  console.log(`inputValues:${JSON.stringify(inputValues)}`);
 
   useEffect(() => {
-    if (result !== undefined || result !== "") setError(false);
-  }, [result]);
+    const resultIntermediate = getConsolidatedSentence(inputValues);
+    if (resultIntermediate != "") {
+      setError(false);
+    }
+  }, [inputValues]);
+
+  // Function to get the consolidated sentence with validation
+  const getConsolidatedSentence = (newValues: {
+    [key: string]: string;
+  }): string => {
+    const lines = incompleteSentence.split("/").map((line) => line.trim());
+    let result = "";
+    const newErrors: { [key: string]: boolean } = {};
+
+    lines.forEach((line, lineIndex) => {
+      const parts = line.split("_");
+      let lineResult = "";
+
+      parts.forEach((part, partIndex) => {
+        lineResult += part;
+
+        if (partIndex < parts.length - 1) {
+          const value = newValues[`${lineIndex}-${partIndex}`]?.trim() || "";
+          if (value === "") {
+            newErrors[`${lineIndex}-${partIndex}`] = true; // Mark input as invalid
+          } else {
+            newErrors[`${lineIndex}-${partIndex}`] = false; // Clear previous error
+          }
+          lineResult += value;
+        }
+      });
+
+      // Add input at end if no underscores and it's the last line
+      if (parts.length === 1 && lineIndex === lines.length - 1) {
+        const value = newValues[`end-${lineIndex}`]?.trim() || "";
+        if (value === "") {
+          newErrors[`end-${lineIndex}`] = true; // Mark input as invalid
+        } else {
+          newErrors[`end-${lineIndex}`] = false; // Clear previous error
+        }
+        lineResult += value;
+      }
+
+      result += lineResult;
+      if (lineIndex < lines.length - 1) {
+        result += " / ";
+      }
+    });
+
+    // Prevent consolidation if there are errors
+    if (Object.values(newErrors).some((hasError) => hasError)) {
+      return "";
+    }
+
+    return result;
+  };
 
   return (
     <div className="relative flex h-full w-full flex-col justify-center p-4 rounded-lg dark:bg-black bg-amber-50">
@@ -28,10 +81,10 @@ export const AnswerPage = ({ postId, incompleteSentence }: AnswerPageProps) => {
             "relative z-20 mb-4 mt-2 text-left dark:text-white text-black"
           }
         >
-          <div className="relative z-20 mb-4 mt-2 w-full text-lg dark:text-white text-black">
+          <div className="relative z-20 mb-6 mt-2 w-full text-2xl dark:text-white text-black">
             Check your sentence:
           </div>
-          <div className="relative z-20 mb-4 mt-2 w-full dark:text-white text-black">
+          <div className="relative z-20 mb-6 mt-2 w-full text-3xl text-wrap dark:text-white text-black">
             {result}
           </div>
         </div>
@@ -43,7 +96,6 @@ export const AnswerPage = ({ postId, incompleteSentence }: AnswerPageProps) => {
         >
           <DynamicInputs
             sentence={incompleteSentence}
-            onConsolidatedChange={setResult}
             inputValues={inputValues}
             setInputValues={setInputValues}
           />
@@ -59,8 +111,11 @@ export const AnswerPage = ({ postId, incompleteSentence }: AnswerPageProps) => {
                 : "bg-sky-900 dark:bg-lime-300  text-white dark:text-black"
             }`}
             onClick={() => {
-              if (!(result === undefined || result === "")) setCheck(!check);
-              else setError(true);
+              const resultIntermediate = getConsolidatedSentence(inputValues);
+              if (resultIntermediate !== "") {
+                setResult(resultIntermediate);
+                setCheck(!check);
+              } else setError(true);
             }}
           >
             Check 👀
@@ -88,7 +143,7 @@ export const AnswerPage = ({ postId, incompleteSentence }: AnswerPageProps) => {
               Submit ✅
             </button>
           </div>
-          <div className="flex justify-center w-full">
+          <div className="flex justify-center w-full mt-2">
             <button
               type="submit"
               className="md:w-1/6 w-1/2 flex items-center justify-center rounded-full border-2 border-sky-900  dark:border-lime-300 bg-transparent dark:text-white text-sky-900 p-2 font-bold"
