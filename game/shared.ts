@@ -89,6 +89,7 @@ export type LeaderboardScore = {
   username: string;
   score: number;
   rank: number;
+  isActiveUser ?: boolean
 };
 
 export interface SentenceEntry {

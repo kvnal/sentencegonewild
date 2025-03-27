@@ -6,6 +6,7 @@ import {
   WebviewToBlockMessage,
 } from "../../game/shared.js";
 import StyledButton from "../components/Button.js";
+import { getLeaderboard, getUserLeaderboardScore } from "../utils/services.js";
 
 export interface PinnedHomeProps {
   context: Devvit.Context;
@@ -69,15 +70,36 @@ const PinnedHome = (props: PinnedHomeProps): JSX.Element => {
   const leaderboard = useWebView<WebviewToBlockMessage, BlocksToWebviewMessage>(
     {
       onMessage: async (event, { postMessage }) => {
-        const leaderboardData: LeaderboardScore[] = [
-          // Dummy Data - Leaderboard API
-          { username: "r/dummy", score: 2302, rank: 2 },
-          { username: "r/dummyla", score: 2151, rank: 3 },
-          { username: "r/newdummy", score: 3467, rank: 1 },
-          { username: "r/verydummy", score: 1172, rank: 5 },
-          { username: "r/maakidummy", score: 1398, rank: 4 },
-          { username: "r/noobdummy", score: 21, rank: 23 },
-        ];
+        const leaderboardData: LeaderboardScore[] = [];
+        
+        const leaderboardApi = await getLeaderboard(context,5);
+        
+        let currentUsername = await context.reddit.getCurrentUsername();
+        let currentUsernameInTop5 : boolean = false;
+        
+        const currentUserLeaderboard = await getUserLeaderboardScore(context);
+
+        leaderboardApi.forEach((element,index) => {
+          leaderboardData.push({
+              username : element.member,
+              score : element.score,
+              rank : index+1,
+              isActiveUser : element.member == currentUsername 
+          })
+          if(element.member == currentUsername){
+            currentUsernameInTop5 = true;
+          }
+
+        });
+
+        if(!currentUsernameInTop5 && currentUserLeaderboard?.rank && currentUserLeaderboard?.score){
+        
+          leaderboardData.push({
+            rank: currentUserLeaderboard.rank + 1 | -1,
+            score : currentUserLeaderboard.score,
+            username: currentUsername ? currentUsername : "You"
+          })
+        }
 
         const data = event as unknown as WebviewToBlockMessage;
 

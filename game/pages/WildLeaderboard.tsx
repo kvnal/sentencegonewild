@@ -8,15 +8,15 @@ export interface LeaderboardPageProps {
 export const LeaderboardPage = ({ leaderboard }: LeaderboardPageProps) => {
 
   return (
-    <div className="relative flex h-full w-full flex-col justify-center p-8 dark:bg-black bg-amber-50">
+    <div className="relative flex h-full w-full flex-col p-8 dark:bg-black bg-amber-50">
       <div
         className={
-          "relative z-20 mb-8 mt-2 text-left w-full text-2xl dark:text-white text-black"
+          "relative z-20 mb-8 mt-2 text-left w-full text-xl dark:text-white text-black"
         }
       >
         Leaderboard
       </div>
-      <div className="w-full">
+      <div className="w-full h-full flex items-center justify-center">
         <LeaderboardTable leaderboard={leaderboard} />
       </div>
     </div>

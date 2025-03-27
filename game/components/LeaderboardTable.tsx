@@ -9,40 +9,21 @@ const LeaderboardTable = ({leaderboard}: LeaderboardTableProps) => {
   const sortedData = [...leaderboard].sort((a, b) => a.rank - b.rank);
 
   return (
-    <div className="overflow-x-auto">
-      <table className="table-auto w-full border-collapse border rounded-lg">
-        <thead className="bg-stone-200 dark:bg-gray-800 rounded-t-lg">
-          <tr className="rounded-t-lg">
-            <th className="border px-4 py-2 text-left text-black dark:text-white border-black dark:border-lime-300 rounded-tl-lg">
-              Rank
-            </th>
-            <th className="border px-4 py-2 text-left text-black dark:text-white border-black dark:border-lime-300">
-              Username
-            </th>
-            <th className="border px-4 py-2 text-left text-black dark:text-white border-black dark:border-lime-300 rounded-tr-lg">
-              Score
-            </th>
-          </tr>
-        </thead>
-        <tbody>
+    <div className="overflow-x-auto w-11/12">
           {sortedData.map((entry: LeaderboardScore) => (
-            <tr
-              key={entry.rank}
-              className="odd:bg-slate-100 even:bg-stone-200 dark:odd:bg-gray-700 dark:even:bg-gray-800 last:rounded-b-lg"
-            >
-              <td className="border px-4 py-2 text-black dark:text-white border-black dark:border-lime-300">
-                {entry.rank}
-              </td>
-              <td className="border px-4 py-2 text-black dark:text-white border-black dark:border-lime-300">
-                {entry.username}
-              </td>
-              <td className="border px-4 py-2 text-black dark:text-white border-black dark:border-lime-300">
-                {entry.score}
-              </td>
-            </tr>
+            <a className="flex items-center py-4 mx-6 mt-2 border border-lime-300"
+            style={{background: entry.isActiveUser ? "#b13ac747" : ""}}
+            href={`https://www.reddit.com/user/${entry.username}/`}>
+            <span className="text-lime-300 text-md font-medium mx-2">{entry.rank}</span>
+            <img className="w-8 h-8 rounded-full object-cover mr-2" src="https://www.redditstatic.com/avatars/defaults/v2/avatar_default_3.png"
+                alt="User avatar" />
+
+            <div className="flex w-full justify-between">
+                <h3 className="text-md font-medium text-gray-100">{entry.username}</h3>
+                <p className="text-red-400 text-right text-lg mx-2 font-mono font-semibold">{entry.score}</p>
+            </div>
+        </a>
           ))}
-        </tbody>
-      </table>
     </div>
   );
 };

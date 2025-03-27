@@ -199,7 +199,9 @@ export const getUserLeaderboardScore = async (
 
   let score = await redis.zScore(redisKey.leaderboard, u?.username);
 
-  return score;
+  let rank = await redis.zRank(redisKey.leaderboard, u?.username);
+
+  return {score: score, rank : rank};
 };
 
 export const delRedis = async (
