@@ -5,7 +5,6 @@ import ResizingTextArea from "./ResizableTextarea";
 
 interface DynamicInputsProps {
   sentence: string;
-  onConsolidatedChange?: (result: string) => void;
   inputValues: {
     [key: string]: string;
   };
@@ -18,12 +17,9 @@ interface DynamicInputsProps {
 
 export const DynamicInputs: React.FC<DynamicInputsProps> = ({
   sentence,
-  onConsolidatedChange,
   inputValues,
   setInputValues,
 }) => {
-  // const [inputValues, setInputValues] = useState<{ [key: string]: string }>({});
-
   // Sanitize HTML content
   const sanitizeAndRender = (html: string) => {
     const clean: string = DOMPurify.sanitize(html, {
@@ -33,40 +29,7 @@ export const DynamicInputs: React.FC<DynamicInputsProps> = ({
     return parse(clean);
   };
 
-  // Function to get the consolidated sentence with inputs filled in
-  const getConsolidatedSentence = (newValues: {
-    [key: string]: string;
-  }): string => {
-    const lines = sentence.split("/").map((line) => line.trim());
-    let result = "";
-
-    lines.forEach((line, lineIndex) => {
-      const parts = line.split("_");
-      let lineResult = "";
-
-      parts.forEach((part, partIndex) => {
-        lineResult += part;
-        if (partIndex < parts.length - 1) {
-          const value = newValues[`${lineIndex}-${partIndex}`] || "";
-          lineResult += value;
-        }
-      });
-
-      // Add input at end if no underscores and it's the last line
-      if (parts.length === 1 && lineIndex === lines.length - 1) {
-        const value = newValues[`end-${lineIndex}`] || "";
-        lineResult += value;
-      }
-
-      result += lineResult;
-      if (lineIndex < lines.length - 1) {
-        result += " / ";
-      }
-    });
-
-    return result;
-  };
-
+  
   const processSentence = (text: string) => {
     const lines = text.split("/").map((line) => line.trim());
 
@@ -98,14 +61,16 @@ export const DynamicInputs: React.FC<DynamicInputsProps> = ({
           className="dark:text-white text-black flex flex-wrap"
         >
           {parts.map((part, partIndex) => {
-            console.log("Part:|" + part + "|:end");
             return (
               <React.Fragment key={`part-${lineIndex}-${partIndex}`}>
                 {part != "" && (
                   <div className="mx-2 mt-2">{sanitizeAndRender(part)}</div>
                 )}
                 {partIndex < parts.length - 1 && (
-                  <div className="mx-4 mt-2 w-full" id={`ResizingTextArea${partIndex}`}>
+                  <div
+                    className="mx-4 mt-2 w-full"
+                    id={`ResizingTextArea${partIndex}`}
+                  >
                     <ResizingTextArea
                       value={inputValues[`${lineIndex}-${partIndex}`] || ""}
                       onChange={(event) =>
@@ -132,12 +97,6 @@ export const DynamicInputs: React.FC<DynamicInputsProps> = ({
       [key]: value,
     };
     setInputValues(newValues);
-
-    // Call the callback with the consolidated sentence whenever inputs change
-    if (onConsolidatedChange) {
-      const consolidated = getConsolidatedSentence(newValues);
-      onConsolidatedChange(consolidated);
-    }
   };
 
   return (

@@ -15,9 +15,11 @@ export const HelpPage = () => {
       >
         Help?
       </div>
-      <p className="text-xl mt-10 dark:text-white text-black">Fill the sentence with some funky fillers!</p>
-      <p className="text-xl mt-2 dark:text-white text-black">More the comment upvotes means more points!</p>
-      <p className="text-md mt-7 text-center dark:text-orange-700 text-purple-900">Have a wild day !</p>
+      <p className="text-2xl mt-10 dark:text-white text-black">Fill the sentence with some funky fillers!</p>
+      <p className="text-3xl mt-4 dark:text-white text-black">More the comment upvotes means more points!</p>
+      <p className="text-3xl mt-4 dark:text-white text-black">Sorry, assistance is unavailable for those who dare to use light mode 😂.</p>
+      
+      <p className="text-md mt-10 text-center dark:text-orange-700 text-purple-900">Have a wild day !</p>
     </div>
   );
 };
