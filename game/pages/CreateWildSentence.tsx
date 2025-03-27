@@ -67,7 +67,7 @@ export const CreatePage = () => {
             }
           }}
         >
-          Submit
+          Create
         </button>
       </div>
     </div>

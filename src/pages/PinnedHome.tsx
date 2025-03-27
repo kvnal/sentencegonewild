@@ -7,6 +7,7 @@ import {
 } from "../../game/shared.js";
 import StyledButton from "../components/Button.js";
 import { getLeaderboard, getUserLeaderboardScore } from "../utils/services.js";
+import { createWildSentencePost } from "../actions/actions.js";
 
 export interface PinnedHomeProps {
   context: Devvit.Context;
@@ -34,6 +35,8 @@ const PinnedHome = (props: PinnedHomeProps): JSX.Element => {
         // do the redis? and create a comment
         // changeview to check submitted page
         console.log("User entered new sentence", data.payload.newSentence);
+
+        await createWildSentencePost(context, data.payload.newSentence, true);
 
         // To-do: create new post.
         //   let comment = await context.reddit.submitComment({
