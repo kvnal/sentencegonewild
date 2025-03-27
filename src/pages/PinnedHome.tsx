@@ -70,7 +70,7 @@ const PinnedHome = (props: PinnedHomeProps): JSX.Element => {
     {
       onMessage: async (event, { postMessage }) => {
         const leaderboardData: LeaderboardScore[] = [
-          // Dummy Data
+          // Dummy Data - Leaderboard API
           { username: "r/dummy", score: 2302, rank: 2 },
           { username: "r/dummyla", score: 2151, rank: 3 },
           { username: "r/newdummy", score: 3467, rank: 1 },
@@ -136,13 +136,14 @@ const PinnedHome = (props: PinnedHomeProps): JSX.Element => {
       lightBackgroundColor="#fffbeb"
     >
       <image
-          url="sgw-logo-card-large.png"
-          description="Logo"
-          height={'200px'}
-          width={'300px'}
-          imageHeight={'240px'}
-          imageWidth={'240px'}
-        />
+        url="sgw-logo-card-large.png"
+        description="Logo"
+        height={"130px"}
+        width={"195px"}
+        imageHeight={"240px"}
+        imageWidth={"360px"}
+      />
+      <spacer size="small" />
       <StyledButton
         width="30%"
         height="auto"
@@ -162,11 +163,11 @@ const PinnedHome = (props: PinnedHomeProps): JSX.Element => {
         height="auto"
         style={{
           darkBorderColor: "#bbf451",
-          darkBackgroundColor: "#bbf451",
-          lightBackgroundColor: "#024a70",
+          darkBackgroundColor: "#bbf4500",
+          lightBackgroundColor: "#024a7000",
           lightBorderColor: "#024a70",
-          lightTextColor: "#ffffff",
-          darkTextColor: "#000000",
+          lightTextColor: "#024a70",
+          darkTextColor: "#bbf451",
         }}
         text="Leaderboard"
         onPress={() => leaderboard.mount()}
@@ -176,11 +177,11 @@ const PinnedHome = (props: PinnedHomeProps): JSX.Element => {
         height="auto"
         style={{
           darkBorderColor: "#bbf451",
-          darkBackgroundColor: "#bbf451",
-          lightBackgroundColor: "#024a70",
+          darkBackgroundColor: "#bbf4500",
+          lightBackgroundColor: "#024a7000",
           lightBorderColor: "#024a70",
-          lightTextColor: "#ffffff",
-          darkTextColor: "#000000",
+          lightTextColor: "#024a70",
+          darkTextColor: "#bbf451",
         }}
         text="Help"
         onPress={() => help.mount()}

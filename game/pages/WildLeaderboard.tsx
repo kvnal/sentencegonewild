@@ -8,7 +8,7 @@ export interface LeaderboardPageProps {
 export const LeaderboardPage = ({ leaderboard }: LeaderboardPageProps) => {
 
   return (
-    <div className="relative flex h-full w-full flex-col justify-center p-4 rounded-lg dark:bg-black bg-amber-50">
+    <div className="relative flex h-full w-full flex-col justify-center p-8 dark:bg-black bg-amber-50">
       <div
         className={
           "relative z-20 mb-8 mt-2 text-left w-full text-2xl dark:text-white text-black"

@@ -26,10 +26,12 @@ const StyledButton = ({
       height={height}
       width={width}
       onPress={onPress}
+      border="thin"
       lightBorderColor={style.lightBorderColor}
       darkBorderColor={style.darkBorderColor}
+      darkBackgroundColor={style.darkBackgroundColor}
+        lightBackgroundColor={style.lightBackgroundColor}
       cornerRadius="full"
-      padding="xsmall"
     >
       <hstack
         height="100%"
@@ -41,7 +43,7 @@ const StyledButton = ({
         darkBackgroundColor={style.darkBackgroundColor}
         lightBackgroundColor={style.lightBackgroundColor}
       >
-        <text lightColor={style.lightTextColor} darkColor={style.darkTextColor}>
+        <text lightColor={style.lightTextColor} darkColor={style.darkTextColor} weight="bold">
           {text}
         </text>
       </hstack>
