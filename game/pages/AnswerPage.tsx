@@ -74,7 +74,7 @@ export const AnswerPage = ({ postId, incompleteSentence }: AnswerPageProps) => {
   };
 
   return (
-    <div className="relative flex h-full w-full flex-col justify-center p-4 rounded-lg dark:bg-black bg-amber-50">
+    <div className="relative flex h-full w-full flex-col justify-center p-8 dark:bg-black bg-amber-50">
       {check ? (
         <div
           className={
@@ -118,7 +118,7 @@ export const AnswerPage = ({ postId, incompleteSentence }: AnswerPageProps) => {
               } else setError(true);
             }}
           >
-            Check 👀
+            Check
           </button>
         )}
       </div>
@@ -140,7 +140,7 @@ export const AnswerPage = ({ postId, incompleteSentence }: AnswerPageProps) => {
                 });
               }}
             >
-              Submit ✅
+              Submit
             </button>
           </div>
           <div className="flex justify-center w-full mt-2">
