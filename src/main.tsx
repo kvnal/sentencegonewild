@@ -1,6 +1,7 @@
 // Learn more at developers.reddit.com/docs
 import { Devvit } from '@devvit/public-api';
 import './scheduler/autoPost.js'
+import "./scheduler/leaderBoardUpdate.js"
 import { auto_post_turn_off_menuItem, auto_post_turn_on_menuItem, PinnedPost, WildSentencePost} from './actions/MenuItemsList.js';
 
 import Router from './routes/Router.js';

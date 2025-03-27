@@ -1,6 +1,6 @@
 import { Devvit, JobContext, RichTextBuilder } from "@devvit/public-api";
 import { Preview } from "../components/Preview.js";
-import { checkSentenceAlreadyCreated, getPostSentence, incPostCountByOne, incrUserLeaderboardScore, savePostedSentenceInfo, saveWildSentencePost } from "../utils/services.js";
+import { checkSentenceAlreadyCreated, createLeaderboardScheduler, getPostSentence, incPostCountByOne, incrUserLeaderboardScore, savePostedSentenceInfo, saveWildSentencePost } from "../utils/services.js";
 import { getRandomSentence } from "../utils/getRandomSentence.js";
 import { SentenceEntry } from "../../game/shared.js";
 import { gamePointsSystem } from "../utils/keys.js";
@@ -84,6 +84,9 @@ export const createWildSentencePost = async (context : Devvit.Context | JobConte
         // user created post
         await incrUserLeaderboardScore(context, gamePointsSystem.onCreatePost);
     }
+
+    // comment scanner and score update job
+    await createLeaderboardScheduler(context, post.id);
     
     if(navigateToPost && ui){
         // navigate only when post is created by user.

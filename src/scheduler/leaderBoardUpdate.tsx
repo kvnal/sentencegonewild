@@ -1,15 +1,42 @@
 import { Devvit, useState } from '@devvit/public-api';
-import { jobKey } from '../utils/keys.js';
-import { createWildSentencePost } from '../actions/actions.js';
+import { gamePointsSystem, jobKey, redisKey } from '../utils/keys.js';
+import { createWildSentencePost, DEV_COMMENT } from '../actions/actions.js';
+import { getLeaderboard, incrUserLeaderboardScore } from '../utils/services.js';
 
 // export const AUTO_SENTENCE_POST_JOB = "auto_sentence_post_job"
 
 export const job_leaderboard_scores = Devvit.addSchedulerJob({
-    name: jobKey.AUTO_SENTENCE_POST_JOB, // you can use an arbitrary name here
+    name: jobKey.POST_COMMENT_SCAN_LEADERBOARD_JOB, // you can use an arbitrary name here
     onRun: async (event, context) => {
-      // do stuff when the job is executed
-    // get upvotes increase users scores
-    // add redis queue post id for scan after post created.
+
+      const {data} = event;
+      if(data?.postId){
+        console.log(`leaderboard job - running - ${data?.postId}`);
+
+        let comments = await context.reddit.getComments({
+          postId: data.postId + "",
+          sort:"top",
+          limit : 50
+        }).all();
+
+        comments.forEach(async (com)=> {
+
+          if(!com.body.includes(DEV_COMMENT) && com.authorId){
+
+            let updatedScore = await incrUserLeaderboardScore(context, com.score*gamePointsSystem.onEachUpvote, com.authorName);
+
+            console.log(`leaderboard job - score updated for ${com.authorId} - ${com.authorName} - current score - ${updatedScore}`);
+            
+          }
+            
+        });
+      }
+     
+
+      // test
+      let scores = await getLeaderboard(context, 5);
+      console.log("scores - ", JSON.stringify(scores));
+
     },
   });
 
