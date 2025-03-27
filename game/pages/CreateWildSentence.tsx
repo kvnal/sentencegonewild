@@ -40,8 +40,7 @@ export const CreatePage = () => {
       </div>
 
       <p className="mb-4 mt-2 text-left text-sm w-full dark:text-sky-300 text-gray-600">
-        Use single _ (underscore) for empty space and / (forward slash) for new
-        line.
+        to create an input box in your sentence add a single "_" (underscore).
       </p>
 
       <div className="flex justify-center w-full">
