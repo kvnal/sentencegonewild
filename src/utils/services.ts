@@ -49,19 +49,12 @@ export const saveWildSentencePost = async (
 };
 
 export const getUsername = async (context: Devvit.Context) => {
+  console.log(context.userId);
   if (!context.userId) return null; // Return early if no userId
-  const cacheKey = "cache:userId-username";
-  const cache = await context.redis.hGet(cacheKey, context.userId);
-  if (cache) {
-    return cache;
-  } else {
-    const user = await context.reddit.getUserById(context.userId);
-    if (user) {
-      await context.redis.hSet(cacheKey, {
-        [context.userId]: user.username,
-      });
-      return user.username;
-    }
+  const user = await context.reddit.getCurrentUsername();
+  console.log(JSON.stringify(user, null, 2));
+  if (user) {
+    return user;
   }
   return null;
 };
@@ -201,7 +194,7 @@ export const getUserLeaderboardScore = async (
 
   let rank = await redis.zRank(redisKey.leaderboard, u?.username);
 
-  return {score: score, rank : rank};
+  return { score: score, rank: rank };
 };
 
 export const delRedis = async (
@@ -252,7 +245,7 @@ export const createLeaderboardScheduler = async (
 ) => {
   const fourHoursFromNow = new Date();
   fourHoursFromNow.setHours(fourHoursFromNow.getHours() + 4);
-  
+
   // for testing
   // fourHoursFromNow.setMinutes(fourHoursFromNow.getMinutes() + 1);
 

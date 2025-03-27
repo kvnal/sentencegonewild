@@ -1,7 +1,7 @@
-import { Devvit, MenuItem, RedditAPIClient } from "@devvit/public-api";
+import { Devvit, MenuItem } from "@devvit/public-api";
 import { Preview } from "../components/Preview.js";
-import { checkSentenceAlreadyCreated, getUsername, incPostCountByOne, savePinnedPost, saveWildSentencePost } from "../utils/services.js";
-import { jobKey, redisKey } from "../utils/keys.js";
+import { savePinnedPost } from "../utils/services.js";
+import { jobKey } from "../utils/keys.js";
 import { createWildSentencePost } from "./actions.js";
 
 

@@ -5,7 +5,12 @@ import {
   TopWildComment,
   WebviewToBlockMessage,
 } from "../../game/shared.js";
-import { getPostSentence, getPostTopComment, incrUserLeaderboardScore } from "../utils/services.js";
+import {
+  getPostSentence,
+  getPostTopComment,
+  getUsername,
+  incrUserLeaderboardScore,
+} from "../utils/services.js";
 import StyledButton from "../components/Button.js";
 import { gamePointsSystem } from "../utils/keys.js";
 
@@ -23,8 +28,16 @@ const WildSentence = (props: WildSentenceProps): JSX.Element => {
     return postSentence; // Try others to test
   });
 
-  const [topWildComment] = useState<TopWildComment|null>(async () => {
-    const topWildComment: TopWildComment | null = await getPostTopComment(context, 1);
+  const [currentUsername] = useState<string>(async () => {
+    const currentUsername = await getUsername(context) ?? "";
+    return currentUsername; // Try others to test
+  });
+
+  const [topWildComment] = useState<TopWildComment | null>(async () => {
+    const topWildComment: TopWildComment | null = await getPostTopComment(
+      context,
+      1
+    );
 
     return topWildComment; // Try others to test
   });
@@ -111,15 +124,21 @@ const WildSentence = (props: WildSentenceProps): JSX.Element => {
       height="100%"
       width="100%"
       gap="medium"
-      alignment="start middle"
-      padding="medium"
+      alignment="start top"
+      padding="large"
       darkBackgroundColor="#000000"
       lightBackgroundColor="#fffbeb"
     >
-      <text size="xlarge" darkColor="#ffffff" lightColor="#000000" wrap>
-        {postSentence.replace(/_/g, "____________").replace("/", "\n")}
-      </text>
+      <spacer size="medium" />
+      <hstack padding="medium" alignment="top start">
+        <text size="xxlarge" darkColor="#ffffff" lightColor="#000000" wrap>
+          {postSentence.replace(/_/g, "____________").replace("/", "\n")}
+        </text>
+      </hstack>
+
+      <spacer size="large" />
       <spacer size="small" />
+
       <hstack
         width="100%"
         gap="medium"
@@ -142,33 +161,138 @@ const WildSentence = (props: WildSentenceProps): JSX.Element => {
           onPress={() => wildSentence.mount()}
         />
       </hstack>
-      {topWildComment && topWildComment?.username &&
+      <spacer size="small" />
+      {topWildComment &&
+        topWildComment?.username &&
         topWildComment?.score &&
         topWildComment?.wildComment && (
           <>
-            <spacer size="large" />
-            <text size="large" darkColor="#ffffff" lightColor="#000000">Top wild comment:</text>
-            <hstack>
-              <text darkColor="#ffffff" lightColor="#000000">Username:</text>
-              <spacer size="small" />
-              <text weight="bold" darkColor="#ffffff" lightColor="#000000">{topWildComment.username}</text>
+            <hstack alignment="top start">
+              <text size="small" darkColor="#ffffff" lightColor="#000000">
+                Top wild comment:
+              </text>
             </hstack>
-            <hstack>
-              <text darkColor="#ffffff" lightColor="#000000">Score:</text>
-              <spacer size="small" />
-              <text weight="bold" darkColor="#ffffff" lightColor="#000000">{topWildComment.score}</text>
-            </hstack>
-            <vstack>
-              <text darkColor="#ffffff" lightColor="#000000">Completed Sentence:</text>
-              <spacer size="small" />
-              <text darkColor="#ffffff" lightColor="#000000" wrap>{topWildComment.wildComment}</text>
+            <vstack
+              padding="small"
+              alignment="start middle"
+              cornerRadius="medium"
+              width="100%"
+              darkBackgroundColor="#0B1416"
+              lightBackgroundColor="#ffffff"
+              border="thin"
+              lightBorderColor="#0B1416"
+            >
+              <hstack alignment="middle start">
+                <hstack cornerRadius="full">
+                  <image
+                    url="https://www.redditstatic.com/avatars/defaults/v2/avatar_default_3.png"
+                    description="Logo"
+                    height={"20px"}
+                    width={"20px"}
+                    imageHeight={"240px"}
+                    imageWidth={"240px"}
+                  />
+                </hstack>
+                <spacer size="small" />
+                <text
+                  weight="bold"
+                  darkColor="#ffffff"
+                  lightColor="#000000"
+                  size="small"
+                >
+                  {topWildComment?.username}
+                </text>
+              </hstack>
+              <hstack alignment="top start">
+                <spacer size="large" />
+                <hstack alignment="start middle" grow>
+                  <text
+                    darkColor="#ffffff"
+                    lightColor="#000000"
+                    wrap
+                    size="medium"
+                  >
+                    {topWildComment?.wildComment}
+                  </text>
+                </hstack>
+              </hstack>
+              <hstack alignment="middle start">
+                <spacer size="large" />
+                <icon name="upvotes-fill" size="small" color="#d93900" />
+                <spacer size="small" />
+                <text weight="bold" darkColor="#ffffff" lightColor="#000000">
+                  {topWildComment?.score}
+                </text>
+              </hstack>
             </vstack>
           </>
         )}
 
-        {!topWildComment &&
-          <text>be the first one comment.</text>
-        }
+
+      {/* If new post */}
+      {!topWildComment && 
+      (
+        <>
+          <hstack alignment="top start">
+            <text size="small" darkColor="#ffffff" lightColor="#000000">
+              Top wild comment:
+            </text>
+          </hstack>
+          <vstack
+            padding="small"
+            alignment="start middle"
+            cornerRadius="medium"
+            width="100%"
+            darkBackgroundColor="#0B1416"
+            lightBackgroundColor="#ffffff"
+            border="thin"
+            lightBorderColor="#0B1416"
+          >
+            <hstack alignment="middle start">
+              <hstack cornerRadius="full">
+                <image
+                  url="https://www.redditstatic.com/avatars/defaults/v2/avatar_default_2.png"
+                  description="Logo"
+                  height={"20px"}
+                  width={"20px"}
+                  imageHeight={"240px"}
+                  imageWidth={"240px"}
+                />
+              </hstack>
+              <spacer size="small" />
+              <text
+                weight="bold"
+                darkColor="#ffffff"
+                lightColor="#000000"
+                size="small"
+              >
+                {currentUsername}
+              </text>
+            </hstack>
+            <hstack alignment="top start">
+              <spacer size="large" />
+              <hstack alignment="start middle" grow>
+                <text
+                  darkColor="#ffffff"
+                  lightColor="#000000"
+                  wrap
+                  size="medium"
+                >
+                 Your comment can be here!, be the First one to answer 🔥
+                </text>
+              </hstack>
+            </hstack>
+            <hstack alignment="middle start">
+              <spacer size="large" />
+              <icon name="upvotes-fill" size="small" color="#d93900" />
+              <spacer size="small" />
+              <text weight="bold" darkColor="#ffffff" lightColor="#000000">
+                {999999999}
+              </text>
+            </hstack>
+          </vstack>
+        </>
+      )}
     </vstack>
   );
 };

@@ -140,7 +140,7 @@ export const AnswerPage = ({ postId, incompleteSentence }: AnswerPageProps) => {
           <div className="flex justify-center w-full">
             <button
               type="submit"
-              className="md:w-1/6 w-1/2 mt-2 flex items-center justify-center rounded-full bg-sky-900 disabled:bg-gray-100 dark:bg-lime-300 dark:disabled:bg-zinc-800 text-white dark:text-black p-2 font-bold"
+              className="md:w-1/6 w-1/2 mt-2 ms-2 flex items-center justify-center rounded-full bg-sky-900 disabled:bg-gray-100 dark:bg-lime-300 dark:disabled:bg-zinc-800 text-white dark:text-black p-2 font-bold"
               onClick={() => {
                 sendToDevvit({
                   // Send completed message to Devvit
