@@ -64,11 +64,11 @@ export const DynamicInputs: React.FC<DynamicInputsProps> = ({
             return (
               <React.Fragment key={`part-${lineIndex}-${partIndex}`}>
                 {part != "" && (
-                  <div className="mx-2 mt-2">{sanitizeAndRender(part)}</div>
+                  <div className="mt-2 text-2xl text-left">{sanitizeAndRender(part)}</div>
                 )}
                 {partIndex < parts.length - 1 && (
                   <div
-                    className="mx-4 mt-2 w-full"
+                    className="mx-0 mt-2 w-full"
                     id={`ResizingTextArea${partIndex}`}
                   >
                     <ResizingTextArea

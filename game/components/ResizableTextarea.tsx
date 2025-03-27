@@ -33,6 +33,7 @@ const ResizingTextArea = (props: ResizingTextAreaProps) => {
         height: MIN_TEXTAREA_HEIGHT,
         resize: "none",
       }}
+      maxLength={200}
       className="text-2xl w-full border-b-2 dark:border-white border-black focus:outline-none dark:text-lime-300 text-sky-900 dark:focus:border-b-sky-400 focus:border-b-sky-400 overflow-hidden"
       value={value}
       placeholder={placeholder}
