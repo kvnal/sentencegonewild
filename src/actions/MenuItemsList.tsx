@@ -8,7 +8,7 @@ import { createWildSentencePost } from "./actions.js";
 const DEV = " (swg)"
 
 export const auto_post_turn_on_menuItem: MenuItem = {
-  label: "ON - auto post" + DEV,
+  label: "ON - Scheduled Wild Sentence" + DEV,
   location: "subreddit",
   onPress: async (event, context) => {
 
@@ -36,7 +36,7 @@ export const auto_post_turn_on_menuItem: MenuItem = {
 
 
 export const auto_post_turn_off_menuItem: MenuItem = {
-  label: "OFF - auto post" + DEV,
+  label: "OFF - Scheduled Wild Sentence" + DEV,
   location: "subreddit",
   onPress: async (event, context) => {
 
@@ -49,7 +49,7 @@ export const auto_post_turn_off_menuItem: MenuItem = {
 };
 
 export const PinnedPost: MenuItem = {
-  label: 'install app + Launch Pinned App' + DEV,
+  label: 'Post Pinned Home' + DEV,
   // click only for the first time and pin the post (create/leaderboard/help) page.
   location: 'subreddit',
   forUserType: 'moderator',
@@ -75,7 +75,7 @@ export const PinnedPost: MenuItem = {
 }
 
 export const WildSentencePost: MenuItem = {
-  label: 'create Wild Sentence post' + DEV,
+  label: 'Post Wild Sentence' + DEV,
   // to be automated - generate a new wild sentence post
   location: 'subreddit',
   forUserType: 'moderator',

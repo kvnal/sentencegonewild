@@ -269,9 +269,9 @@ const WildSentence = (props: WildSentenceProps): JSX.Element => {
                 {currentUsername}
               </text>
             </hstack>
-            <hstack alignment="top start">
+            <hstack alignment="top start" width="100%">
               <spacer size="large" />
-              <hstack alignment="start middle" grow>
+              <hstack alignment="start middle">
                 <text
                   darkColor="#ffffff"
                   lightColor="#000000"
@@ -281,6 +281,7 @@ const WildSentence = (props: WildSentenceProps): JSX.Element => {
                  Your comment can be here!, be the First one to answer 🔥
                 </text>
               </hstack>
+              <spacer size="xsmall" />
             </hstack>
             <hstack alignment="middle start">
               <spacer size="large" />

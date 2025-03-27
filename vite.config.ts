@@ -1,9 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-// @ts-expect-error Too lazy
 import path from "path";
-// https://github.com/tailwindlabs/tailwindcss/issues/16751
-// @ts-expect-error Tailwind and Vite are having some problems ATM
 import tailwind from '@tailwindcss/vite'
 
 // https://vite.dev/config/
