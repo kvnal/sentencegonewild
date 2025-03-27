@@ -67,6 +67,7 @@ export type TopWildComment = {
   username: string;
   score: number;
   wildComment: string;
+  url?:string
 }
 
 export type CreatePageData = {

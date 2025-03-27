@@ -1,6 +1,8 @@
+import { TopWildComment } from './../../game/shared.js';
 import { Devvit, JobContext, Post } from "@devvit/public-api";
 import { IRedisPostData, IRedisUsedSentence, PostHStorage, PostId, PostType, SentenceEntry } from "../../game/shared.js";
 import { redisKey, postKey } from "./keys.js";
+import { DEV_COMMENT } from '../actions/actions.js';
 
 export const getPostType = async(context:Devvit.Context, postId: PostId) => {
     const key = postKey.postData(postId);
@@ -143,4 +145,31 @@ export const getUsername = async (context: Devvit.Context) => {
   }
 
 
-  
+  export const getPostTopComment = async (context : Devvit.Context | JobContext, count : number) => {
+    
+    if(!context.postId) return null;
+
+    const topComment = await context.reddit.getComments({
+      postId: context.postId,
+      limit : 2,
+      sort:"top"
+    }).all()
+    
+    let commentReponse : TopWildComment | null = null; 
+
+    topComment.forEach(comment => {
+      if(!comment.body.includes(DEV_COMMENT)){
+         commentReponse = {
+          username: comment.authorName,
+          score: comment.score,
+          wildComment: comment.body, 
+          url: comment.url,
+        }
+      }
+
+    });
+
+    if(!commentReponse) return null;
+
+    return commentReponse;
+  }

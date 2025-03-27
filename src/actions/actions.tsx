@@ -5,7 +5,7 @@ import { getRandomSentence } from "../utils/getRandomSentence.js";
 import { SentenceEntry } from "../../game/shared.js";
 import { gamePointsSystem } from "../utils/keys.js";
 
-const DEV_COMMENT = "Your username as author on the comment/post created by you would be visible once our app is approved by the reddit team. Thank You!"
+export const DEV_COMMENT = "Your username as author on the comment/post created by you would be visible once our app is approved by the reddit team. Thank You!"
 
 const POST_BY_JOB_TITLE = " : Creator's Edition"
 

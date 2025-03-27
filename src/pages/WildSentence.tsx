@@ -5,7 +5,7 @@ import {
   TopWildComment,
   WebviewToBlockMessage,
 } from "../../game/shared.js";
-import { getPostSentence, incrUserLeaderboardScore } from "../utils/services.js";
+import { getPostSentence, getPostTopComment, incrUserLeaderboardScore } from "../utils/services.js";
 import StyledButton from "../components/Button.js";
 import { gamePointsSystem } from "../utils/keys.js";
 
@@ -23,14 +23,9 @@ const WildSentence = (props: WildSentenceProps): JSX.Element => {
     return postSentence; // Try others to test
   });
 
-  const [topWildComment] = useState<TopWildComment>(async () => {
-    const topWildComment: TopWildComment = {
-      // Dummy, replace with API call
-      username: "r/DevvitDummy",
-      score: 21,
-      wildComment:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    };
+  const [topWildComment] = useState<TopWildComment|null>(async () => {
+    const topWildComment: TopWildComment | null = await getPostTopComment(context, 1);
+
     return topWildComment; // Try others to test
   });
 
@@ -147,7 +142,7 @@ const WildSentence = (props: WildSentenceProps): JSX.Element => {
           onPress={() => wildSentence.mount()}
         />
       </hstack>
-      {topWildComment?.username &&
+      {topWildComment && topWildComment?.username &&
         topWildComment?.score &&
         topWildComment?.wildComment && (
           <>
@@ -170,6 +165,10 @@ const WildSentence = (props: WildSentenceProps): JSX.Element => {
             </vstack>
           </>
         )}
+
+        {!topWildComment &&
+          <text>be the first one comment.</text>
+        }
     </vstack>
   );
 };
