@@ -244,7 +244,7 @@ export const createLeaderboardScheduler = async (
   postId: string
 ) => {
   const fourHoursFromNow = new Date();
-  fourHoursFromNow.setHours(fourHoursFromNow.getHours() + 4);
+  fourHoursFromNow.setHours(fourHoursFromNow.getHours() + 3);
 
   // for testing
   // fourHoursFromNow.setMinutes(fourHoursFromNow.getMinutes() + 1);
