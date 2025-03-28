@@ -93,7 +93,7 @@ export const AnswerPage = ({ postId, incompleteSentence }: AnswerPageProps) => {
           className={
             "relative z-20 mb-4 mt-2 text-center w-full dark:text-white text-black"
           }
-          style={{width:'70%'}}
+          style={{ width: "70%" }}
         >
           <DynamicInputs
             sentence={incompleteSentence}
@@ -123,61 +123,41 @@ export const AnswerPage = ({ postId, incompleteSentence }: AnswerPageProps) => {
           </button>
         )}
 
-{check && result && result != "" && (
-        <>
-        <div className="flex justify-center w-full mt-2">
-            <button
-              type="submit"
-              className="md:w-1/6 w-1/2 flex items-center justify-center rounded-full border-2 border-sky-900  dark:border-lime-300 bg-transparent dark:text-white text-sky-900 p-2 font-bold"
-              onClick={() => {
-                setCheck(!check);
-              }}
-            >
-              Back
-            </button>
-          </div>
+        {check && result && result != "" && (
+          <>
+            <div className="flex justify-center w-full mt-2">
+              <button
+                type="submit"
+                className="md:w-1/6 w-1/2 flex items-center justify-center rounded-full border-2 border-sky-900  dark:border-lime-300 bg-transparent dark:text-white text-sky-900 p-2 font-bold"
+                onClick={() => {
+                  setCheck(!check);
+                }}
+              >
+                Back
+              </button>
+            </div>
 
-          <div className="flex justify-center w-full">
-            <button
-              type="submit"
-              className="md:w-1/6 w-1/2 mt-2 ms-2 flex items-center justify-center rounded-full bg-sky-900 disabled:bg-gray-100 dark:bg-lime-300 dark:disabled:bg-zinc-800 text-white dark:text-black p-2 font-bold"
-              onClick={() => {
-                sendToDevvit({
-                  // Send completed message to Devvit
-                  type: "SUBMIT",
-                  payload: {
-                    postId: postId,
-                    completedSentence: result,
-                  },
-                });
-              }}
-            >
-              Submit
-            </button>
-          </div>
-          
-        </>
-      )}
+            <div className="flex justify-center w-full">
+              <button
+                type="submit"
+                className="md:w-1/6 w-1/2 mt-2 ms-2 flex items-center justify-center rounded-full bg-sky-900 disabled:bg-gray-100 dark:bg-lime-300 dark:disabled:bg-zinc-800 text-white dark:text-black p-2 font-bold"
+                onClick={() => {
+                  sendToDevvit({
+                    // Send completed message to Devvit
+                    type: "SUBMIT",
+                    payload: {
+                      postId: postId,
+                      completedSentence: result,
+                    },
+                  });
+                }}
+              >
+                Submit
+              </button>
+            </div>
+          </>
+        )}
       </div>
-
-      
     </div>
   );
 };
-
-// const MagicButton = ({ children, ...props }: ComponentProps<'button'>) => {
-//   return (
-//     <button
-//       className={cn(
-//         'relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50',
-//         props.className
-//       )}
-//       {...props}
-//     >
-//       <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-//       <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
-//         {children}
-//       </span>
-//     </button>
-//   );
-// };

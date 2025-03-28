@@ -29,7 +29,6 @@ export const DynamicInputs: React.FC<DynamicInputsProps> = ({
     return parse(clean);
   };
 
-  
   const processSentence = (text: string) => {
     const lines = text.split("/").map((line) => line.trim());
 
@@ -38,16 +37,21 @@ export const DynamicInputs: React.FC<DynamicInputsProps> = ({
 
       if (parts.length === 1) {
         return (
-          <div key={`line-${lineIndex}`} className="line-container">
-            {sanitizeAndRender(parts[0])}
+          <div
+            key={`line-${lineIndex}`}
+            className="dark:text-white text-black flex flex-wrap"
+          >
+            <div className="mt-2 text-2xl text-left">
+              {sanitizeAndRender(parts[0])}
+            </div>
             {lineIndex === lines.length - 1 && (
-              <div style={{ marginTop: "8px" }}>
+              <div className="mx-0 mt-2 w-full">
                 <ResizingTextArea
                   value={inputValues[`end-${lineIndex}`] || ""}
                   onChange={(event) =>
                     handleInputChange(`end-${lineIndex}`, event.target.value)
                   }
-                  placeholder="click to type!"
+                  placeholder="Click to type!"
                 />
               </div>
             )}
@@ -64,7 +68,9 @@ export const DynamicInputs: React.FC<DynamicInputsProps> = ({
             return (
               <React.Fragment key={`part-${lineIndex}-${partIndex}`}>
                 {part != "" && (
-                  <div className="mt-2 text-2xl text-left">{sanitizeAndRender(part)}</div>
+                  <div className="mt-2 text-2xl text-left">
+                    {sanitizeAndRender(part)}
+                  </div>
                 )}
                 {partIndex < parts.length - 1 && (
                   <div
@@ -79,7 +85,7 @@ export const DynamicInputs: React.FC<DynamicInputsProps> = ({
                           event.target.value
                         )
                       }
-                      placeholder="click to type!"
+                      placeholder="Click to type!"
                     />
                   </div>
                 )}
