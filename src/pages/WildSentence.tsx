@@ -11,6 +11,7 @@ import {
   getUsername,
   incrUserLeaderboardScore,
 } from "../utils/services.js";
+import {decode} from 'html-entities'
 import StyledButton from "../components/Button.js";
 import { gamePointsSystem } from "../utils/keys.js";
 
@@ -90,35 +91,6 @@ const WildSentence = (props: WildSentenceProps): JSX.Element => {
     },
   });
 
-  // Upvote
-  // uname
-  // Completed sentence\
-
-  /*
-    Home Page Post
-    Photo
-    // Create
-    - Webview input + submit button
-    // Help option 
-    - Help webview
-    // Leaderboard
-    - Data
-    // Username + Score list of 5 + 1 (Overall) + Rank
-
-    */
-
-  /* Block 
-     Incomplete Sentence
-     Top Comment
-     Answer button
-     - Sentence
-     - Input box bottom border only
-     - Dynamic input 
-     - Check (Optional)
-     - Check screen (Optional)
-     - Submit   
-    */
-
   return (
     <vstack
       height="100%"
@@ -132,7 +104,7 @@ const WildSentence = (props: WildSentenceProps): JSX.Element => {
       <spacer size="medium" />
       <hstack padding="medium" alignment="top start">
         <text size="xxlarge" darkColor="#ffffff" lightColor="#000000" wrap>
-          {postSentence.replace(/_/g, "____________").replace("/", "\n")}
+          {decode(postSentence.replace(/_/g, "____________").replace(/\//g, "\n"))}
         </text>
       </hstack>
 
@@ -205,14 +177,14 @@ const WildSentence = (props: WildSentenceProps): JSX.Element => {
               </hstack>
               <hstack alignment="top start">
                 <spacer size="large" />
-                <hstack alignment="start middle" grow>
+                <hstack alignment="start middle"  grow>
                   <text
                     darkColor="#ffffff"
                     lightColor="#000000"
                     wrap
                     size="medium"
                   >
-                    {topWildComment?.wildComment}
+                    {decode(topWildComment?.wildComment)}
                   </text>
                 </hstack>
               </hstack>
