@@ -2,6 +2,7 @@ import { sendToDevvit } from "../utils";
 import { PostId } from "../shared";
 import { DynamicInputs } from "../components/DynamicInputs";
 import { useEffect, useState } from "react";
+import { decode } from "html-entities";
 
 export interface AnswerPageProps {
   postId: PostId;
@@ -85,7 +86,7 @@ export const AnswerPage = ({ postId, incompleteSentence }: AnswerPageProps) => {
             Check your sentence:
           </div>
           <div className="relative z-20 mb-6 mt-2 w-full text-3xl text-wrap dark:text-white text-black">
-            {result}
+            {decode(result)}
           </div>
         </div>
       ) : (

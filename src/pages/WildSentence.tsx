@@ -91,35 +91,6 @@ const WildSentence = (props: WildSentenceProps): JSX.Element => {
     },
   });
 
-  // Upvote
-  // uname
-  // Completed sentence\
-
-  /*
-    Home Page Post
-    Photo
-    // Create
-    - Webview input + submit button
-    // Help option 
-    - Help webview
-    // Leaderboard
-    - Data
-    // Username + Score list of 5 + 1 (Overall) + Rank
-
-    */
-
-  /* Block 
-     Incomplete Sentence
-     Top Comment
-     Answer button
-     - Sentence
-     - Input box bottom border only
-     - Dynamic input 
-     - Check (Optional)
-     - Check screen (Optional)
-     - Submit   
-    */
-
   return (
     <vstack
       height="100%"
