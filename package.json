@@ -8,11 +8,14 @@
     "start": "devvit playtest devvit_test_app",
     "dev:game": "vite build --watch",
     "dev:devvit": "devvit playtest devvit_test_app",
+    "dev:devvit:prod": "devvit playtest sentencegonewild",
     "dev": "concurrently -p \"[{name}]\" -n \"DEVVIT,GAME\" -c \"bgBlue.bold,bgMagenta.bold,bgGreen.bold\" \"npm run dev:devvit\" \"npm run dev:game\" --restart-tries 30",
     "vite": "vite",
     "upload": "devvit upload",
     "uninstall:sd": "devvit uninstall devvit_test_app sentencegonewi-2",
-    "install": "devvit install devvit_test_app"
+    "install": "devvit install devvit_test_app",
+    "install:prod": "devvit install sentencegonewild",
+    "dev:prod": "concurrently -p \"[{name}]\" -n \"DEVVIT,GAME\" -c \"bgBlue.bold,bgMagenta.bold,bgGreen.bold\" \"npm run dev:devvit:prod\" \"npm run dev:game\" --restart-tries 30"
   },
   "dependencies": {
     "@devvit/public-api": "0.11.10",
