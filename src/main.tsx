@@ -18,7 +18,7 @@ Devvit.addMenuItem(PinnedPost);
 Devvit.addMenuItem(WildSentencePost);
 Devvit.addMenuItem(auto_post_turn_on_menuItem);
 Devvit.addMenuItem(auto_post_turn_off_menuItem);
-Devvit.addMenuItem(createFakeLeaderboard);
+// Devvit.addMenuItem(createFakeLeaderboard);
 
 // Add a post type definition
 Devvit.addCustomPostType({ 
