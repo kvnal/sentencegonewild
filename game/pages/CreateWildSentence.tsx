@@ -11,11 +11,17 @@ export const CreatePage = () => {
     //Fix trailing space
     let trimmedInput = value.trim();
     // Fix multiple underscores
-    let underscoreFixed = trimmedInput.replace("/_+/g", "_");
+    let underscoreFixed = trimmedInput.replace(/_+/g, "_");
     let sanitized = DOMPurify.sanitize(underscoreFixed, {
       USE_PROFILES: { html: true },
     });
-
+    console.log(`|${trimmedInput.replace(/_/g, "").trim()}|${trimmedInput.replace(/_/g, "").trim()===""}`);
+    if (trimmedInput.replace(/_/g, "").trim() === "") {
+      return "";
+    }
+    else if(!/[a-zA-Z0-9]/.test(sanitized)){
+      return ""
+    }
     return sanitized;
   };
 
@@ -56,6 +62,7 @@ export const CreatePage = () => {
             if (sanitisedValue === "") {
               setError(true);
             } else {
+              console.log(`This was an Accepted input: ${sanitisedValue}`);
               sendToDevvit({
                 // Send completed message to Devvit
                 type: "SUBMIT_SENTENCE",
