@@ -85,8 +85,8 @@ export const AnswerPage = ({ postId, incompleteSentence }: AnswerPageProps) => {
           <div className="relative z-20 mb-6 mt-2 w-full text-md dark:text-lime-300 text-black">
             Check your sentence:
           </div>
-          <div className="relative z-20 mb-6 mt-2 w-full text-3xl text-wrap dark:text-white text-black">
-            {decode(result)}
+          <div className="relative z-20 mb-6 mt-2 w-full text-3xl text-wrap dark:text-white text-black whitespace-pre-wrap">
+            {decode(result).replace(/\//g, "\n")}
           </div>
         </div>
       ) : (
@@ -149,7 +149,7 @@ export const AnswerPage = ({ postId, incompleteSentence }: AnswerPageProps) => {
                       type: "SUBMIT",
                       payload: {
                         postId: postId,
-                        completedSentence: result,
+                        completedSentence: result.replace(/\//g, "\n"),
                       },
                     });
                   }}
