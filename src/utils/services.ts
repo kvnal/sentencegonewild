@@ -49,10 +49,10 @@ export const saveWildSentencePost = async (
 };
 
 export const getUsername = async (context: Devvit.Context) => {
-  console.log(context.userId);
   if (!context.userId) return null; // Return early if no userId
   const user = await context.reddit.getCurrentUsername();
-  console.log(JSON.stringify(user, null, 2));
+  // console.log(context.userId);
+  // console.log(JSON.stringify(user, null, 2));
   if (user) {
     return user;
   }

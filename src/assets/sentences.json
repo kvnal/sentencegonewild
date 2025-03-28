@@ -6,11 +6,11 @@
         },
         {
             "id": 2,
-            "sentence": "What\"s a girl\"s best friend?"
+            "sentence": "What\"s a girl\"s best friend? _"
         },
         {
             "id": 3,
-            "sentence": "What\"s that smell?"
+            "sentence": "What\"s that smell? _"
         },
         {
             "id": 4,
@@ -18,7 +18,7 @@
         },
         {
             "id": 5,
-            "sentence": "What is Batman\"s guilty pleasure?"
+            "sentence": "What is Batman\"s guilty pleasure? _"
         },
         {
             "id": 6,
@@ -26,7 +26,7 @@
         },
         {
             "id": 7,
-            "sentence": "What ended my last relationship?"
+            "sentence": "What ended my last relationship? _"
         },
         {
             "id": 8,
@@ -46,11 +46,11 @@
         },
         {
             "id": 12,
-            "sentence": "What\"s that sound?"
+            "sentence": "What\"s that sound? _"
         },
         {
             "id": 13,
-            "sentence": "What\"s the next Happy Meal&reg; toy?"
+            "sentence": "What\"s the next Happy Meal&reg; toy? _"
         },
         {
             "id": 14,
@@ -70,7 +70,7 @@
         },
         {
             "id": 18,
-            "sentence": "What\"s the most emo?"
+            "sentence": "What\"s the most emo? _"
         },
         {
             "id": 19,
@@ -94,7 +94,7 @@
         },
         {
             "id": 24,
-            "sentence": "War!<br><br>What is it good for?"
+            "sentence": "War!<br><br>What is it good for? _"
         },
         {
             "id": 25,
@@ -110,31 +110,31 @@
         },
         {
             "id": 28,
-            "sentence": "What did I bring back from Mexico?"
+            "sentence": "What did I bring back from Mexico? _"
         },
         {
             "id": 29,
-            "sentence": "What are my parents hiding from me?"
+            "sentence": "What are my parents hiding from me? _"
         },
         {
             "id": 30,
-            "sentence": "What will always get you laid?"
+            "sentence": "What will always get you laid? _"
         },
         {
             "id": 31,
-            "sentence": "What would grandma find disturbing, yet oddly charming?"
+            "sentence": "What would grandma find disturbing, yet oddly charming? _"
         },
         {
             "id": 32,
-            "sentence": "What did the U.S. airdrop to the children of Afghanistan?"
+            "sentence": "What did the U.S. airdrop to the children of Afghanistan? _"
         },
         {
             "id": 33,
-            "sentence": "What helps Obama unwind?"
+            "sentence": "What helps Obama unwind? _"
         },
         {
             "id": 34,
-            "sentence": "What\"s there a ton of in heaven?"
+            "sentence": "What\"s there a ton of in heaven? _"
         },
         {
             "id": 35,
@@ -146,7 +146,7 @@
         },
         {
             "id": 37,
-            "sentence": "What\"s the new fad diet?"
+            "sentence": "What\"s the new fad diet? _"
         },
         {
             "id": 38,
@@ -158,11 +158,11 @@
         },
         {
             "id": 40,
-            "sentence": "How am I maintaining my relationship status?"
+            "sentence": "How am I maintaining my relationship status? _"
         },
         {
             "id": 41,
-            "sentence": "What will I bring back in time to convince people that I am a powerful wizard?"
+            "sentence": "What will I bring back in time to convince people that I am a powerful wizard? _"
         },
         {
             "id": 42,
@@ -174,11 +174,11 @@
         },
         {
             "id": 44,
-            "sentence": "What\"s my secret power?"
+            "sentence": "What\"s my secret power? _"
         },
         {
             "id": 45,
-            "sentence": "What gives me uncontrollable gas?"
+            "sentence": "What gives me uncontrollable gas? _"
         },
         {
             "id": 46,
@@ -186,15 +186,15 @@
         },
         {
             "id": 47,
-            "sentence": "What never fails to liven up the party?"
+            "sentence": "What never fails to liven up the party? _"
         },
         {
             "id": 48,
-            "sentence": "What am I giving up for Lent?"
+            "sentence": "What am I giving up for Lent? _"
         },
         {
             "id": 49,
-            "sentence": "What do old people smell like? "
+            "sentence": "What do old people smell like? _"
         },
         {
             "id": 50,
@@ -210,7 +210,7 @@
         },
         {
             "id": 53,
-            "sentence": "What\"s Teach for America using to inspire inner city students to succeed?"
+            "sentence": "What\"s Teach for America using to inspire inner city students to succeed? _"
         },
         {
             "id": 54,
@@ -218,7 +218,7 @@
         },
         {
             "id": 55,
-            "sentence": "Why do I hurt all over?"
+            "sentence": "Why do I hurt all over? _"
         },
         {
             "id": 56,
@@ -226,11 +226,11 @@
         },
         {
             "id": 57,
-            "sentence": "Why am I sticky?"
+            "sentence": "Why am I sticky? _"
         },
         {
             "id": 58,
-            "sentence": "What\"s my anti-drug?"
+            "sentence": "What\"s my anti-drug? _"
         },
         {
             "id": 59,
@@ -246,7 +246,7 @@
         },
         {
             "id": 62,
-            "sentence": "What did Vin Diesel eat for dinner?"
+            "sentence": "What did Vin Diesel eat for dinner? _"
         },
         {
             "id": 63,
@@ -254,7 +254,7 @@
         },
         {
             "id": 64,
-            "sentence": "What gets better with age?"
+            "sentence": "What gets better with age? _"
         },
         {
             "id": 65,
@@ -270,7 +270,7 @@
         },
         {
             "id": 68,
-            "sentence": "Make a haiku."
+            "sentence": "Make a haiku. _"
         },
         {
             "id": 69,
@@ -298,7 +298,7 @@
         },
         {
             "id": 75,
-            "sentence": "What\"s the next superhero/sidekick duo?"
+            "sentence": "What\"s the next superhero/sidekick duo? _"
         },
         {
             "id": 76,
@@ -334,7 +334,7 @@
         },
         {
             "id": 84,
-            "sentence": "How did I lose my virginity?"
+            "sentence": "How did I lose my virginity? _"
         },
         {
             "id": 85,
@@ -342,11 +342,11 @@
         },
         {
             "id": 86,
-            "sentence": "In 1,000 years, when paper money is a distant memory, how will we pay for goods and services?"
+            "sentence": "In 1,000 years, when paper money is a distant memory, how will we pay for goods and services? _"
         },
         {
             "id": 87,
-            "sentence": "What don\"t you want to find in your Kung Pao chicken?"
+            "sentence": "What don\"t you want to find in your Kung Pao chicken? _"
         },
         {
             "id": 88,
@@ -354,7 +354,7 @@
         },
         {
             "id": 89,
-            "sentence": "Daddy, why is Mommy crying?"
+            "sentence": "Daddy, why is Mommy crying? _"
         },
         {
             "id": 90,
@@ -363,10 +363,6 @@
         {
             "id": 91,
             "sentence": "Why can\"t I sleep at night?"
-        },
-        {
-            "id": 92,
-            "sentence": "What\"s that smell?"
         },
         {
             "id": 93,
@@ -378,7 +374,7 @@
         },
         {
             "id": 95,
-            "sentence": "What\"s the next Happy Meal\\u00a9; toy?"
+            "sentence": "What\"s the next Happy Meal\\u00a9; toy? _"
         },
         {
             "id": 96,
@@ -402,11 +398,11 @@
         },
         {
             "id": 101,
-            "sentence": "What\"s that sound?"
+            "sentence": "What\"s that sound? _"
         },
         {
             "id": 102,
-            "sentence": "What ended my last relationship?"
+            "sentence": "What ended my last relationship? _"
         },
         {
             "id": 103,

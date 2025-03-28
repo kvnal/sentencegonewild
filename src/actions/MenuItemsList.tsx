@@ -1,11 +1,11 @@
 import { Devvit, MenuItem } from "@devvit/public-api";
 import { Preview } from "../components/Preview.js";
-import { savePinnedPost } from "../utils/services.js";
+import { incrUserLeaderboardScore, savePinnedPost } from "../utils/services.js";
 import { jobKey } from "../utils/keys.js";
 import { createWildSentencePost } from "./actions.js";
 
 
-const DEV = " (swg)"
+const DEV = ""
 
 export const auto_post_turn_on_menuItem: MenuItem = {
   label: "ON - Scheduled Wild Sentence" + DEV,
@@ -21,7 +21,8 @@ export const auto_post_turn_on_menuItem: MenuItem = {
 
     const jobId = await context.scheduler.runJob({
         name: jobKey.AUTO_SENTENCE_POST_JOB,
-        cron: "0-59 * * * *" //every minute
+        // cron: "0-59 * * * *", //every minute
+        cron: "1 0-23/4 * * *" //every 4 hours
     });
 
     // save job id for cancelling
@@ -82,6 +83,20 @@ export const WildSentencePost: MenuItem = {
   onPress: async (_event, context) => {
       // await incPostCountByOne(context);
       await createWildSentencePost(context, null, true);
+
+  },
+}
+
+export const createFakeLeaderboard: MenuItem = {
+  label: 'fake leaderboard entry - dev' + DEV,
+  // to be automated - generate a new wild sentence post
+  location: 'subreddit',
+  forUserType: 'moderator',
+  onPress: async (_event, context) => {
+      await incrUserLeaderboardScore(context, 10, "test_user_1")
+      await incrUserLeaderboardScore(context, 3, "test_user_2")
+      await incrUserLeaderboardScore(context, 12, "test_user_3")
+      await incrUserLeaderboardScore(context, 30, "test_user_4")
 
   },
 }
