@@ -271,16 +271,15 @@ const WildSentence = (props: WildSentenceProps): JSX.Element => {
             </hstack>
             <hstack alignment="top start" width="100%">
               <spacer size="large" />
-              <hstack alignment="start middle">
                 <text
                   darkColor="#ffffff"
                   lightColor="#000000"
-                  wrap
                   size="medium"
+                  width="85%"
+                  wrap={true}
                 >
-                 Your comment can be here!, be the First one to answer 🔥
+                 {"Your comment can be here!, be the First one to answer 🔥"}
                 </text>
-              </hstack>
               <spacer size="xsmall" />
             </hstack>
             <hstack alignment="middle start">
