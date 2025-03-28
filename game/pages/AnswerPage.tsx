@@ -56,7 +56,7 @@ export const AnswerPage = ({ postId, incompleteSentence }: AnswerPageProps) => {
         } else {
           newErrors[`end-${lineIndex}`] = false; // Clear previous error
         }
-        lineResult += value;
+        lineResult += ` ${value}`;
       }
 
       result += lineResult;
@@ -124,38 +124,40 @@ export const AnswerPage = ({ postId, incompleteSentence }: AnswerPageProps) => {
         )}
 
         {check && result && result != "" && (
-          <>
-            <div className="flex justify-center w-full mt-2">
-              <button
-                type="submit"
-                className="md:w-1/6 w-1/2 flex items-center justify-center rounded-full border-2 border-sky-900  dark:border-lime-300 bg-transparent dark:text-white text-sky-900 p-2 font-bold"
-                onClick={() => {
-                  setCheck(!check);
-                }}
-              >
-                Back
-              </button>
-            </div>
+          <div className="flex justify-end w-full">
+            <div className="flex justify-end sm:w-1/2 w-2/3">
+              <div className="flex justify-center w-full mt-2">
+                <button
+                  type="submit"
+                  className="md:w-1/6 w-full flex items-center justify-center rounded-full border-2 border-sky-900  dark:border-lime-300 bg-transparent dark:text-white text-sky-900 p-2 font-bold"
+                  onClick={() => {
+                    setCheck(!check);
+                  }}
+                >
+                  Back
+                </button>
+              </div>
 
-            <div className="flex justify-center w-full">
-              <button
-                type="submit"
-                className="md:w-1/6 w-1/2 mt-2 ms-2 flex items-center justify-center rounded-full bg-sky-900 disabled:bg-gray-100 dark:bg-lime-300 dark:disabled:bg-zinc-800 text-white dark:text-black p-2 font-bold"
-                onClick={() => {
-                  sendToDevvit({
-                    // Send completed message to Devvit
-                    type: "SUBMIT",
-                    payload: {
-                      postId: postId,
-                      completedSentence: result,
-                    },
-                  });
-                }}
-              >
-                Submit
-              </button>
+              <div className="flex justify-center w-full">
+                <button
+                  type="submit"
+                  className="md:w-1/6 w-full mt-2 ms-2 flex items-center justify-center rounded-full bg-sky-900 disabled:bg-gray-100 dark:bg-lime-300 dark:disabled:bg-zinc-800 text-white dark:text-black p-2 font-bold"
+                  onClick={() => {
+                    sendToDevvit({
+                      // Send completed message to Devvit
+                      type: "SUBMIT",
+                      payload: {
+                        postId: postId,
+                        completedSentence: result,
+                      },
+                    });
+                  }}
+                >
+                  Submit
+                </button>
+              </div>
             </div>
-          </>
+          </div>
         )}
       </div>
     </div>
