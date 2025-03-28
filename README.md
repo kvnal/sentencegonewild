@@ -30,33 +30,48 @@ You would see the following menu items (along mod button top right button) on th
 - **Post Pinned Home** - add a home page of the our app and pin it on the subreddit.
 - **Post Wild Sentence** - a moderator's tool to manually post a wild sentence from the sentence bank.
 
-
-##### home page
-*can be added with by clicking menu items button - Post Pinned Home*
+------------------
+#### App - home page 🏠
+**This page can be added with by clicking menu items button - Post Pinned Home**
 
 This page is home page of our app and has three buttons.
+
 - **create** - users can create their own fillable sentences.  
-  - *user who added their sentence in the input box in this page must have their sentence with a single '_'  (**underscore**) anywhere, where they want to keep the sentence fillable.* <br> **example:** <br> if your sentence is **"hi how are you____?"** <br> just type ```hi how are you _ ?``` in the input box.
+  - *user who added their sentence in the input box in this page must have their sentence with a single '_'  (**underscore**) anywhere, where they want to keep the sentence fillable.* 
+  -  **example:**  if your sentence is **"hi how are you____?"**  just type ```hi how are you _ ?``` in the input box.
+
 - **leaderboard** - a page to show the top 5 rank players along with the current user's rank.
+
 - **help** - just help
-<br>
-##### wild sentence post - page
-this is the page where users can come together and add their humorous fillers in the post's sentence.
 
-all they have to do is click on the **answer** button
-and they will see a popup with a input box where they can type their fillers. once the sentence submitted their sentence will be automatically commented in that post and they will navigated to discussion box, where they can have a look what others have submitted to the post. also they can upvote the ones they like and the author of those comment would recieve game points.
 
+------------------
+#### App - wild sentence post ✍
+__*this is the page where users can come together and add their humorous fillers in the post's sentence.*__
+
+1. All you have to do is click on the **answer** button
+and you will be navigated to a popup with a incompleted sentence and an **input box**, you can click on it and type the *fillers*. 
+
+1. once the sentence **submitted** ✅ (*by clicking on check button and then submit button*) your sentence will be automatically **commented** in the same sentence reddit post and you will navigated to discussion box, where they can have a look at what others have submitted to the post. Also, you can **upvote** 🔼 the ones you like and the author of those comment would recieve **game points**🏆.
+
+------------------
 
 #### Game point system
-- earn 10 points when you create a wild sentence post.
-- earn 1 points on adding the answer filler sentence on any wild sentence post.
-- earn 2 points on each of your comments upvote.
+- earn **10 points** 🏆 when you create your own wild sentence post. 
+  - ```*(you can create by using home page > create button)*.```
+- earn **1 points** 🏆 on adding the answer filler sentence on any wild sentence post. 
+  - ```*(add your own fillers by navigating to a sentence post and clicking on the answer button and then submit)*```
+- earn **2 points** 🏆 on each of your comments upvote.
 
 
-***see you on the leaderboard.
-happy game play!!!*** 
+```👉 *Note*: the user's upvotes points of the comments would be updated on the leaderboard after 4 hours of the post creations.```
 
-## To Playtest the App
+***see you on the leaderboard.*** 🤘📈
+***happy game play!!!*** 🏆😃 
+
+------------------
+## To Playtest the App 
+
 `npm i` in root directory.
 
 Then use `npm run dev` to run both React + Vite and Devvit playtest concurrently.
