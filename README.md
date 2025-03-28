@@ -58,15 +58,16 @@ and you will be navigated to a popup with a incompleted sentence and an **input 
 
 #### Game point system
 - earn **10 points** 🏆 when you create your own wild sentence post. 
-  - ```*(you can create by using home page > create button)*.```
+  - ```(You can create by using home page > create button).```
 - earn **1 points** 🏆 on adding the answer filler sentence on any wild sentence post. 
-  - ```*(add your own fillers by navigating to a sentence post and clicking on the answer button and then submit)*```
+  - ```(Add your own fillers by navigating to a sentence post and clicking on the answer button and then submit)```
 - earn **2 points** 🏆 on each of your comments upvote.
 
 
-```👉 *Note*: the user's upvotes points of the comments would be updated on the leaderboard after 4 hours of the post creations.```
+```👉 Note: the user's upvotes points of the comments would be updated on the leaderboard after 4 hours of the post creations.```
 
 ***see you on the leaderboard.*** 🤘📈
+
 ***happy game play!!!*** 🏆😃 
 
 ------------------
